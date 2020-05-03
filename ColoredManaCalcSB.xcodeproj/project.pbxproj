@@ -7,14 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB5B9496245C84E000CD454E /* CardCostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */; };
 		FB8F75AC24489F9F00140DF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */; };
 		FB8F75AE24489F9F00140DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */; };
-		FB8F75B024489F9F00140DF1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75AF24489F9F00140DF1 /* ViewController.swift */; };
 		FB8F75B324489F9F00140DF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB8F75B124489F9F00140DF1 /* Main.storyboard */; };
 		FB8F75B524489FA100140DF1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB8F75B424489FA100140DF1 /* Assets.xcassets */; };
 		FB8F75B824489FA100140DF1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB8F75B624489FA100140DF1 /* LaunchScreen.storyboard */; };
 		FB8F75C324489FA100140DF1 /* ColoredManaCalcSBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75C224489FA100140DF1 /* ColoredManaCalcSBTests.swift */; };
 		FB8F75CE24489FA100140DF1 /* ColoredManaCalcSBUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75CD24489FA100140DF1 /* ColoredManaCalcSBUITests.swift */; };
+		FB8F75DD2448A02700140DF1 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75DC2448A02700140DF1 /* Card.swift */; };
+		FB8F75DF2448A03700140DF1 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75DE2448A03700140DF1 /* Deck.swift */; };
+		FB8F75E12448A04600140DF1 /* SourceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75E02448A04600140DF1 /* SourceData.swift */; };
+		FB8F75E32448A06300140DF1 /* DeckController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75E22448A06300140DF1 /* DeckController.swift */; };
+		FB8F75E62448A9F700140DF1 /* DeckListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75E52448A9F700140DF1 /* DeckListTableViewController.swift */; };
+		FB8F75EA244B526900140DF1 /* DeckEntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75E9244B526900140DF1 /* DeckEntryViewController.swift */; };
+		FBB2FFE6244F3DCD000B1A5B /* SetDropTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2FFE5244F3DCD000B1A5B /* SetDropTableViewController.swift */; };
+		FBB2FFE82450BE34000B1A5B /* SetDropTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2FFE72450BE34000B1A5B /* SetDropTableViewCell.swift */; };
+		FBB2FFEA2450EBC6000B1A5B /* ManaDescriptionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB2FFE92450EBC6000B1A5B /* ManaDescriptionTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCostTableViewCell.swift; sourceTree = "<group>"; };
 		FB8F75A824489F9F00140DF1 /* ColoredManaCalcSB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColoredManaCalcSB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		FB8F75AF24489F9F00140DF1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		FB8F75B224489F9F00140DF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FB8F75B424489FA100140DF1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FB8F75B724489FA100140DF1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +58,15 @@
 		FB8F75C924489FA100140DF1 /* ColoredManaCalcSBUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ColoredManaCalcSBUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8F75CD24489FA100140DF1 /* ColoredManaCalcSBUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredManaCalcSBUITests.swift; sourceTree = "<group>"; };
 		FB8F75CF24489FA100140DF1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB8F75DC2448A02700140DF1 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		FB8F75DE2448A03700140DF1 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		FB8F75E02448A04600140DF1 /* SourceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceData.swift; sourceTree = "<group>"; };
+		FB8F75E22448A06300140DF1 /* DeckController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckController.swift; sourceTree = "<group>"; };
+		FB8F75E52448A9F700140DF1 /* DeckListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckListTableViewController.swift; sourceTree = "<group>"; };
+		FB8F75E9244B526900140DF1 /* DeckEntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckEntryViewController.swift; sourceTree = "<group>"; };
+		FBB2FFE5244F3DCD000B1A5B /* SetDropTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDropTableViewController.swift; sourceTree = "<group>"; };
+		FBB2FFE72450BE34000B1A5B /* SetDropTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDropTableViewCell.swift; sourceTree = "<group>"; };
+		FBB2FFE92450EBC6000B1A5B /* ManaDescriptionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManaDescriptionTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +117,12 @@
 		FB8F75AA24489F9F00140DF1 /* ColoredManaCalcSB */ = {
 			isa = PBXGroup;
 			children = (
+				FB8F75DB2448A00000140DF1 /* Models */,
+				FB8F75E42448A57D00140DF1 /* Views */,
 				FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */,
 				FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */,
-				FB8F75AF24489F9F00140DF1 /* ViewController.swift */,
 				FB8F75B124489F9F00140DF1 /* Main.storyboard */,
+				FB8F75E22448A06300140DF1 /* DeckController.swift */,
 				FB8F75B424489FA100140DF1 /* Assets.xcassets */,
 				FB8F75B624489FA100140DF1 /* LaunchScreen.storyboard */,
 				FB8F75B924489FA100140DF1 /* Info.plist */,
@@ -126,6 +146,29 @@
 				FB8F75CF24489FA100140DF1 /* Info.plist */,
 			);
 			path = ColoredManaCalcSBUITests;
+			sourceTree = "<group>";
+		};
+		FB8F75DB2448A00000140DF1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FB8F75DC2448A02700140DF1 /* Card.swift */,
+				FB8F75DE2448A03700140DF1 /* Deck.swift */,
+				FB8F75E02448A04600140DF1 /* SourceData.swift */,
+				FBB2FFE72450BE34000B1A5B /* SetDropTableViewCell.swift */,
+				FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FB8F75E42448A57D00140DF1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FB8F75E52448A9F700140DF1 /* DeckListTableViewController.swift */,
+				FB8F75E9244B526900140DF1 /* DeckEntryViewController.swift */,
+				FBB2FFE5244F3DCD000B1A5B /* SetDropTableViewController.swift */,
+				FBB2FFE92450EBC6000B1A5B /* ManaDescriptionTableViewController.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,9 +302,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB8F75B024489F9F00140DF1 /* ViewController.swift in Sources */,
+				FBB2FFE6244F3DCD000B1A5B /* SetDropTableViewController.swift in Sources */,
+				FB8F75EA244B526900140DF1 /* DeckEntryViewController.swift in Sources */,
+				FBB2FFEA2450EBC6000B1A5B /* ManaDescriptionTableViewController.swift in Sources */,
+				FB8F75E12448A04600140DF1 /* SourceData.swift in Sources */,
+				FB8F75E62448A9F700140DF1 /* DeckListTableViewController.swift in Sources */,
 				FB8F75AC24489F9F00140DF1 /* AppDelegate.swift in Sources */,
+				FB8F75DF2448A03700140DF1 /* Deck.swift in Sources */,
+				FBB2FFE82450BE34000B1A5B /* SetDropTableViewCell.swift in Sources */,
+				FB5B9496245C84E000CD454E /* CardCostTableViewCell.swift in Sources */,
 				FB8F75AE24489F9F00140DF1 /* SceneDelegate.swift in Sources */,
+				FB8F75DD2448A02700140DF1 /* Card.swift in Sources */,
+				FB8F75E32448A06300140DF1 /* DeckController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
