@@ -106,6 +106,8 @@ class DeckController {
                 }
             }
         }
+        
+        
     }
     
     //"https://api.scryfall.com/cards/search?q=Hydroid+Krasis+or+Massacre+Girl"

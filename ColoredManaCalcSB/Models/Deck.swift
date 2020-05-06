@@ -15,6 +15,27 @@ struct Deck: Codable {
     var sideText: [String:Int]
     var colors: [String]
     var mostExpensiveCardForColor: [String:Card]
+    var landCount: Int {
+        var count = 0
+        for card in self.mainCardArray.filter({$0.typeLine.contains("Land")}){
+            count += card.numInDeck
+        }
+        return count
+    }
+    var numLandsForColor: [String:Int] {
+        var colorSourcesDict = [String:Int]()
+        for item in self.colors {
+            colorSourcesDict[item] = 0
+        }
+        for card in self.mainCardArray.filter({$0.typeLine.contains("Land")}){
+            for color in card.colorIdentity! {
+                for pair in colorSourcesDict.filter({$0.key.contains(color)}) {
+                    colorSourcesDict[pair.key]! += card.numInDeck
+                    }
+                }
+            }
+        return colorSourcesDict
+        }
 
     init(mainCardArray: [Card] = [], sideCardArray: [Card] = [], mainText: [String:Int] = [:], sideText: [String:Int] = [:], colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
         self.mainCardArray = mainCardArray

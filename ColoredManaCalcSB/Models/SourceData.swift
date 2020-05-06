@@ -28,7 +28,7 @@ func getNumSources (from colorCosts: String) -> Int {
         return 14
     case "2CC", "3CCC":
         return 16
-    case "2CCC", "1CC":
+    case "1CC", "2CCC":
         return 18
     case "CC", "1CCC":
         return 20

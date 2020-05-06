@@ -49,12 +49,12 @@ class ManaDescriptionTableViewController: UITableViewController {
         switch indexPath.section {
         
         case 0:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "colorCostCell", for: indexPath)
+            let cell = tableView.dequeueReusableCell(withIdentifier: "colorCostCell", for: indexPath) as! ColorCostTableViewCell
 
             // Configure the cell...
-            cell.textLabel?.text = colorArray[indexPath.row]
             
-            cell.detailTextLabel?.text = String(getNumSources(from: (DeckController.shared.deck.mostExpensiveCardForColor[colorArray[indexPath.row]]?.colorClassDict()[colorArray[indexPath.row]])!))
+            let color = colorArray[indexPath.row]
+            cell.update(with: color)
 
         return cell
         
@@ -74,11 +74,9 @@ class ManaDescriptionTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         switch indexPath.section {
-        case 1:
-            return (CGFloat(Array(Set(spellArray[indexPath.row].colorCost)).count) * 44.0)
             
         default:
-            return 44.0
+            return 88.0
         }
     }
 

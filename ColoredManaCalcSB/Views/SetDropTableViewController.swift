@@ -72,9 +72,7 @@ class SetDropTableViewController: UITableViewController {
     
     
     @IBAction func manaButton(_ sender: UIButton) {
-        /*for card in DeckController.shared.deck.mainCardArray {
-            print(card, "\n")
-        }*/
+        print(DeckController.shared.deck.numLandsForColor)
     }
     
     /*

@@ -22,6 +22,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
     let name: String
     let typeLine: String
     let manaCost: String
+    let colorIdentity: [String]?
     var colors: [String] {
         let colorString = self.manaCost.filter({ !"{1234567890X".contains($0)})
         return colorString.split(separator: "}").map({String($0)})
@@ -44,6 +45,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         case name
         case typeLine = "type_line"
         case manaCost = "mana_cost"
+        case colorIdentity = "color_identity"
         case cardFaces = "card_faces"
     }
     

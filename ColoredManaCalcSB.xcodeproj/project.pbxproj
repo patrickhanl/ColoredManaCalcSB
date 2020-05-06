@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		FB5B9496245C84E000CD454E /* CardCostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */; };
+		FB5B9498245F3AFD00CD454E /* ColorCostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5B9497245F3AFD00CD454E /* ColorCostTableViewCell.swift */; };
 		FB8F75AC24489F9F00140DF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */; };
 		FB8F75AE24489F9F00140DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */; };
 		FB8F75B324489F9F00140DF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB8F75B124489F9F00140DF1 /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 
 /* Begin PBXFileReference section */
 		FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCostTableViewCell.swift; sourceTree = "<group>"; };
+		FB5B9497245F3AFD00CD454E /* ColorCostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCostTableViewCell.swift; sourceTree = "<group>"; };
 		FB8F75A824489F9F00140DF1 /* ColoredManaCalcSB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColoredManaCalcSB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				FB8F75E02448A04600140DF1 /* SourceData.swift */,
 				FBB2FFE72450BE34000B1A5B /* SetDropTableViewCell.swift */,
 				FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */,
+				FB5B9497245F3AFD00CD454E /* ColorCostTableViewCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				FB8F75DF2448A03700140DF1 /* Deck.swift in Sources */,
 				FBB2FFE82450BE34000B1A5B /* SetDropTableViewCell.swift in Sources */,
 				FB5B9496245C84E000CD454E /* CardCostTableViewCell.swift in Sources */,
+				FB5B9498245F3AFD00CD454E /* ColorCostTableViewCell.swift in Sources */,
 				FB8F75AE24489F9F00140DF1 /* SceneDelegate.swift in Sources */,
 				FB8F75DD2448A02700140DF1 /* Card.swift in Sources */,
 				FB8F75E32448A06300140DF1 /* DeckController.swift in Sources */,
