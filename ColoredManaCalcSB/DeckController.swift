@@ -62,8 +62,13 @@ class DeckController {
     }
     
     func process (_ cards: [Card]) {
+        var processedName :String
         for card in cards {
-            let processedName = card.name.lowercased().filter {okChars.contains($0)}
+            if let faces = card.cardFaces {
+                processedName = faces[0].name.lowercased().filter {okChars.contains($0)}
+            } else {
+                processedName = card.name.lowercased().filter {okChars.contains($0)}
+            }
             
             if deck.mainText.keys.contains(processedName){
                 if let faces = card.cardFaces {

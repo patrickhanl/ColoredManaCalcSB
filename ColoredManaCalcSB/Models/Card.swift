@@ -49,6 +49,16 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         case cardFaces = "card_faces"
     }
     
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        typeLine = try container.decode(String.self, forKey: .typeLine)
+        manaCost = try container.decodeIfPresent(String.self, forKey: .manaCost) ?? ""
+        colorIdentity = try container.decodeIfPresent([String].self, forKey: .colorIdentity) ?? []
+        cardFaces = try container.decodeIfPresent([Card].self, forKey: .cardFaces)
+        
+    }
+    
     mutating func setDrop() {
         var derivedCMC = 0
         var mod_str = self.manaCost
