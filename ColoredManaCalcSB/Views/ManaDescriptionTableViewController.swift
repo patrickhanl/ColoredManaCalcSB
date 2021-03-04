@@ -12,6 +12,8 @@ class ManaDescriptionTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.updateData()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -22,9 +24,15 @@ class ManaDescriptionTableViewController: UITableViewController {
 
     // MARK: - Table view data source
     
-    let colorArray = Array(DeckController.shared.deck.mostExpensiveCardForColor.keys)
-    let landArray = DeckController.shared.deck.mainCardArray.filter({$0.typeLine.contains("Land")})
-    let spellArray = DeckController.shared.deck.mainCardArray.filter({!$0.typeLine.contains("Land")})
+    var colorArray: [String] = []
+    var landArray: [Card] = []
+    var spellArray: [Card] = []
+    
+    func updateData() {
+        self.colorArray = Array(DeckController.shared.deck.mostExpensiveCardForColor.keys)
+        self.landArray = DeckController.shared.deck.mainCardArray.filter({$0.typeLine.contains("Land")})
+        self.spellArray = DeckController.shared.deck.mainCardArray.filter({!$0.typeLine.contains("Land")})
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -79,6 +87,11 @@ class ManaDescriptionTableViewController: UITableViewController {
             return 88.0
         }
     }
+    
+    @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
+        
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.

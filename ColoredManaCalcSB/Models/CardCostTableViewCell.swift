@@ -27,12 +27,19 @@ class CardCostTableViewCell: UITableViewCell {
     func update(with card: Card) {
         var detailString: String = ""
         
-        for (color, cost) in card.colorClassDict(){
-                detailString += String(getNumSources(from: cost))
-                
-                detailString += " " + color + " sources\n"
+        if card.colorIdentity == [] {
+            let manaCostChar: Character = card.manaCost[card.manaCost.index(card.manaCost.startIndex, offsetBy: 1)]
+            let manaCostInt = Int(String(manaCostChar))
+            detailString += String(getNumSources(from: String(repeating: "C", count: manaCostInt!)))
+            detailString += " colorless sources"
+        } else {
+            for (color, cost) in card.colorClassDict(){
+                    detailString += String(getNumSources(from: cost))
+                    
+                    detailString += " " + color + " sources\n"
+            }
+            detailString.remove(at: detailString.index(before: detailString.endIndex))
         }
-        detailString.remove(at: detailString.index(before: detailString.endIndex))
         toCastCardName.text = "To cast \(card.name) on turn \(card.drop), you need:"
         youNeedSources.text = detailString
         

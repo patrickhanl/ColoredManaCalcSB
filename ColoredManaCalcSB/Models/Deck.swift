@@ -9,6 +9,8 @@
 import Foundation
 
 struct Deck: Codable {
+    //var companion: Card?
+    var name: String
     var mainCardArray: [Card]
     var sideCardArray: [Card]
     var mainText: [String:Int]
@@ -37,7 +39,9 @@ struct Deck: Codable {
         return colorSourcesDict
         }
 
-    init(mainCardArray: [Card] = [], sideCardArray: [Card] = [], mainText: [String:Int] = [:], sideText: [String:Int] = [:], colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
+    init(name: String = "", mainCardArray: [Card] = [], sideCardArray: [Card] = [], mainText: [String:Int] = [:], sideText: [String:Int] = [:], colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
+        
+        self.name = "New Deck"
         self.mainCardArray = mainCardArray
         self.sideCardArray = sideCardArray
         self.mainText = mainText

@@ -72,7 +72,7 @@ class SetDropTableViewController: UITableViewController {
     
     
     @IBAction func manaButton(_ sender: UIButton) {
-        print(DeckController.shared.deck.numLandsForColor)
+
     }
     
     /*
