@@ -36,8 +36,8 @@ class DeckController {
         let numRegex = try! NSRegularExpression(pattern: "[0-9]{1,3}")
         
         for line in textDeckList.split(separator: "\n", omittingEmptySubsequences: false) {
-            if line == "Deck" {continue}
-            if line == "Sideboard" || line.count == 0 {
+            if line == "Companion" || line == "Deck" || line.count == 0 {continue}
+            if line == "Sideboard" {
                 main = false
                 continue
             }
@@ -74,6 +74,7 @@ class DeckController {
                 if let faces = card.cardFaces {
                     for face in faces {
                         deck.mainCardArray.append(face)
+                        deck.mainCardArray[deck.mainCardArray.count - 1].colorIdentity = card.colorIdentity
                     }
                 } else {
                     deck.mainCardArray.append(card)
@@ -111,8 +112,6 @@ class DeckController {
                 }
             }
         }
-        
-        
     }
     
     //"https://api.scryfall.com/cards/search?q=Hydroid+Krasis+or+Massacre+Girl"

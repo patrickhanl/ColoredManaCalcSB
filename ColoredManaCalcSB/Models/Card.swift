@@ -17,12 +17,10 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         return lhs.name < rhs.name
     }
     
-    //need to evaluate best solution for colors for faces if face is to be card, which i think it does
-    
     let name: String
     let typeLine: String
     let manaCost: String
-    let colorIdentity: [String]?
+    var colorIdentity: [String]?
     var colors: [String] {
         let colorString = self.manaCost.filter({ !"{1234567890X".contains($0)})
         return colorString.split(separator: "}").map({String($0)})
@@ -47,6 +45,8 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         case manaCost = "mana_cost"
         case colorIdentity = "color_identity"
         case cardFaces = "card_faces"
+        case drop
+        case numInDeck
     }
     
     init(from decoder: Decoder) throws {
@@ -54,8 +54,11 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         name = try container.decode(String.self, forKey: .name)
         typeLine = try container.decode(String.self, forKey: .typeLine)
         manaCost = try container.decodeIfPresent(String.self, forKey: .manaCost) ?? ""
-        colorIdentity = try container.decodeIfPresent([String].self, forKey: .colorIdentity) ?? []
+        colorIdentity = try container.decodeIfPresent([String].self, forKey: .colorIdentity)
         cardFaces = try container.decodeIfPresent([Card].self, forKey: .cardFaces)
+        drop = try container.decodeIfPresent(Int.self, forKey: .drop) ?? 0
+        drop = try container.decodeIfPresent(Int.self, forKey: .numInDeck) ?? 0
+        
         
     }
     

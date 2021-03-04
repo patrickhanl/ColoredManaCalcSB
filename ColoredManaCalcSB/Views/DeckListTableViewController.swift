@@ -12,12 +12,16 @@ class DeckListTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        DeckController.shared.deck = Deck()
+
     }
 
     // MARK: - Table view data source
@@ -29,18 +33,37 @@ class DeckListTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return DeckController.shared.deckList.count
+    }
+    
+    func updateUI () {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+        
+    
+    @IBAction func unwindToDecks(unwindSegue: UIStoryboardSegue) {
+        DeckController.shared.deckList.append(DeckController.shared.deck)
+        DeckController.shared.saveDecks()
+        self.updateUI()
     }
 
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "deckListCell", for: indexPath)
+
+        cell.textLabel?.text = DeckController.shared.deckList[indexPath.row].name
+        
+        cell.detailTextLabel?.text = DeckController.shared.deckList[indexPath.row].colors.joined()
 
         return cell
     }
-    */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        DeckController.shared.deck = DeckController.shared.deckList[indexPath.row]
+    }
 
     /*
     // Override to support conditional editing of the table view.
