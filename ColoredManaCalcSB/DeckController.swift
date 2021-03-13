@@ -29,12 +29,16 @@ class DeckController {
     var deck = Deck()
     let okChars = "abcdefghijklmnopqrstuvwxyz1234567890"
 
+    //build dictionary of card names as lowercased, no space text strings and number of cards in deck
     func buildDeckDicts(with textDeckList:String) throws {
 
+        //start in main deck
         var main = true
+        //regexs to remove set info (if present)
         let setRegex = try! NSRegularExpression(pattern: "[(][A-Z0-9]{3}[)]")
         let numRegex = try! NSRegularExpression(pattern: "[0-9]{1,3}")
         
+        //skip compainion, deck lines, empty lines, move to sideboard if sideboard line is present
         for line in textDeckList.split(separator: "\n", omittingEmptySubsequences: false) {
             if line == "Companion" || line == "Deck" || line.count == 0 {continue}
             if line == "Sideboard" {
@@ -42,6 +46,7 @@ class DeckController {
                 continue
             }
             
+            //separate num in deck and set info from name
             var lineSplit = line.split(separator: " ")
             var range = NSRange(location: 0, length: lineSplit.last!.count)
             if numRegex.firstMatch(in: String(lineSplit.last!), options: [], range: range) != nil {
@@ -53,6 +58,7 @@ class DeckController {
                 lineSplit.popLast()
             }
             
+            //add name lowercased with no spaces to main or sideboard text array
             if main {
                     deck.mainText[String(lineSplit[1...].joined(separator: " ")).lowercased().filter {okChars.contains($0)}] = Int(lineSplit[0])
             } else {
@@ -61,8 +67,10 @@ class DeckController {
         }
     }
     
+    //processes array of cards fetched from scryfall API to add to deck if the match names in main card array
     func process (_ cards: [Card]) {
         var processedName :String
+        //add card faces as cards
         for card in cards {
             if let faces = card.cardFaces {
                 processedName = faces[0].name.lowercased().filter {okChars.contains($0)}
@@ -75,9 +83,11 @@ class DeckController {
                     for face in faces {
                         deck.mainCardArray.append(face)
                         deck.mainCardArray[deck.mainCardArray.count - 1].colorIdentity = card.colorIdentity
+                        deck.mainCardArray[deck.mainCardArray.count - 1].numInDeck = deck.mainText[card.cardFaces![0].name.lowercased().filter {okChars.contains($0)}]! //if adding numindeck here, do we need it later?? I think so as we need main card for reference
                     }
                 } else {
                     deck.mainCardArray.append(card)
+                    deck.mainCardArray[deck.mainCardArray.count - 1].numInDeck = deck.mainText[card.name.lowercased().filter {okChars.contains($0)}]!
                 }
             }
             
@@ -96,7 +106,10 @@ class DeckController {
     func setAttributes () {
         for index in 0..<deck.mainCardArray.count {
             deck.mainCardArray[index].setDrop()
-            deck.mainCardArray[index].numInDeck = deck.mainText[deck.mainCardArray[index].name.lowercased().filter {okChars.contains($0)}] ?? -1
+            //is below necessary if i can add in process??
+            if (deck.mainCardArray[index].numInDeck < 0) {
+                deck.mainCardArray[index].numInDeck = deck.mainText[deck.mainCardArray[index].name.lowercased().filter {okChars.contains($0)}] ?? -1
+            }
             
             for color in deck.mainCardArray[index].colors {
                 if !deck.colors.contains(color) {deck.colors.append(color)}
