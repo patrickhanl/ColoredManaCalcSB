@@ -20,6 +20,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
     let name: String
     let typeLine: String
     let manaCost: String
+    let oracleText: String
     var colorIdentity: [String]?
     var colors: [String] {
         let colorString = self.manaCost.filter({ !"{1234567890X".contains($0)})
@@ -30,7 +31,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
     var gold: Bool {return self.colors.count > 0}
     var x: Bool {return self.manaCost.contains("X")}
     var drop = 0
-    var numInDeck = 0
+    var numInDeck = -1
     var colorCost: [String] {
         var mod_str = self.manaCost
         for char in "{1234567890X" {
@@ -43,6 +44,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         case name
         case typeLine = "type_line"
         case manaCost = "mana_cost"
+        case oracleText = "oracle_text"
         case colorIdentity = "color_identity"
         case cardFaces = "card_faces"
         case drop
@@ -54,10 +56,11 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         name = try container.decode(String.self, forKey: .name)
         typeLine = try container.decode(String.self, forKey: .typeLine)
         manaCost = try container.decodeIfPresent(String.self, forKey: .manaCost) ?? ""
+        oracleText = try container.decodeIfPresent(String.self, forKey: .oracleText) ?? ""
         colorIdentity = try container.decodeIfPresent([String].self, forKey: .colorIdentity)
         cardFaces = try container.decodeIfPresent([Card].self, forKey: .cardFaces)
         drop = try container.decodeIfPresent(Int.self, forKey: .drop) ?? 0
-        drop = try container.decodeIfPresent(Int.self, forKey: .numInDeck) ?? 0
+        numInDeck = try container.decodeIfPresent(Int.self, forKey: .numInDeck) ?? 0
         
         
     }
