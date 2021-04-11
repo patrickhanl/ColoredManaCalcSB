@@ -12,6 +12,7 @@ class ManaDescriptionTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(ManaDescriptionHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
         self.updateData()
 
@@ -43,20 +44,51 @@ class ManaDescriptionTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         
         switch section {
-        case 0:
-            return DeckController.shared.deck.colors.count
         case 1:
+            return DeckController.shared.deck.colors.count
+        case 2:
             return spellArray.count
+        case 0:
+            return DeckController.shared.deck.mostExpensiveCardForColor.count
             
         default: return 1
         }
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "sectionHeader") as! ManaDescriptionHeader
+        
+        switch section {
+        case 0:
+            headerView.leftLabel.text = "Most Expensive Card for Each Color"
+            headerView.rightLabel.text = ""
+            headerView.backgroundView = UIView()
+        case 1:
+            headerView.leftLabel.text = "Color"
+            headerView.rightLabel.text = "Number of Sources"
+            headerView.backgroundView = UIView()
+        case 2:
+            headerView.leftLabel.text = "Card / Drop"
+            headerView.rightLabel.text = "Sources to Cast on Curve"
+            headerView.backgroundView = UIView()
+        default:
+            headerView.leftLabel.text = "Header"
+            
+        }
+        headerView.backgroundView?.backgroundColor = UIColor.opaqueSeparator
+        return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
         
-        case 0:
+        case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "colorCostCell", for: indexPath) as! ColorCostTableViewCell
 
             // Configure the cell...
@@ -66,12 +98,24 @@ class ManaDescriptionTableViewController: UITableViewController {
 
         return cell
         
-        case 1:
+        case 2:
             let card = spellArray[indexPath.row]
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cardCostCell", for: indexPath) as! CardCostTableViewCell
             
             cell.update(with: card)
+            
+            return cell
+        
+        case 0:
+            //MostExpensive Card Color and cell
+            let color = colorArray[indexPath.row]
+            
+            let mostExpensiveCardDict = DeckController.shared.deck.mostExpensiveCardForColor
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "costCell", for: indexPath) as! MostExpensiveCardColorCell
+            
+            cell.update(with: color, card: mostExpensiveCardDict[color]!, num: String(DeckController.shared.deck.numLandsForColor[color]!))
             
             return cell
             
@@ -109,7 +153,7 @@ class ManaDescriptionTableViewController: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     */
 

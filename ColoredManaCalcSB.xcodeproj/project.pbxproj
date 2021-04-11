@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		FB5B9496245C84E000CD454E /* CardCostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */; };
 		FB5B9498245F3AFD00CD454E /* ColorCostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB5B9497245F3AFD00CD454E /* ColorCostTableViewCell.swift */; };
+		FB7A09C12607BD1D002268E8 /* MostExpensiveCardColorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7A09C02607BD1D002268E8 /* MostExpensiveCardColorCell.swift */; };
+		FB7A09CE2618F1F2002268E8 /* ManaDescriptionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB7A09CD2618F1F2002268E8 /* ManaDescriptionHeader.swift */; };
 		FB8F75AC24489F9F00140DF1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */; };
 		FB8F75AE24489F9F00140DF1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */; };
 		FB8F75B324489F9F00140DF1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FB8F75B124489F9F00140DF1 /* Main.storyboard */; };
@@ -47,6 +49,8 @@
 /* Begin PBXFileReference section */
 		FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCostTableViewCell.swift; sourceTree = "<group>"; };
 		FB5B9497245F3AFD00CD454E /* ColorCostTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCostTableViewCell.swift; sourceTree = "<group>"; };
+		FB7A09C02607BD1D002268E8 /* MostExpensiveCardColorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostExpensiveCardColorCell.swift; sourceTree = "<group>"; };
+		FB7A09CD2618F1F2002268E8 /* ManaDescriptionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManaDescriptionHeader.swift; sourceTree = "<group>"; };
 		FB8F75A824489F9F00140DF1 /* ColoredManaCalcSB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColoredManaCalcSB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +163,7 @@
 				FBB2FFE72450BE34000B1A5B /* SetDropTableViewCell.swift */,
 				FB5B9495245C84E000CD454E /* CardCostTableViewCell.swift */,
 				FB5B9497245F3AFD00CD454E /* ColorCostTableViewCell.swift */,
+				FB7A09C02607BD1D002268E8 /* MostExpensiveCardColorCell.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 				FB8F75E9244B526900140DF1 /* DeckEntryViewController.swift */,
 				FBB2FFE5244F3DCD000B1A5B /* SetDropTableViewController.swift */,
 				FBB2FFE92450EBC6000B1A5B /* ManaDescriptionTableViewController.swift */,
+				FB7A09CD2618F1F2002268E8 /* ManaDescriptionHeader.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -306,6 +312,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBB2FFE6244F3DCD000B1A5B /* SetDropTableViewController.swift in Sources */,
+				FB7A09CE2618F1F2002268E8 /* ManaDescriptionHeader.swift in Sources */,
 				FB8F75EA244B526900140DF1 /* DeckEntryViewController.swift in Sources */,
 				FBB2FFEA2450EBC6000B1A5B /* ManaDescriptionTableViewController.swift in Sources */,
 				FB8F75E12448A04600140DF1 /* SourceData.swift in Sources */,
@@ -317,6 +324,7 @@
 				FB5B9498245F3AFD00CD454E /* ColorCostTableViewCell.swift in Sources */,
 				FB8F75AE24489F9F00140DF1 /* SceneDelegate.swift in Sources */,
 				FB8F75DD2448A02700140DF1 /* Card.swift in Sources */,
+				FB7A09C12607BD1D002268E8 /* MostExpensiveCardColorCell.swift in Sources */,
 				FB8F75E32448A06300140DF1 /* DeckController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
