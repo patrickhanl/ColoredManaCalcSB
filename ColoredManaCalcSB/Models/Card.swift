@@ -19,7 +19,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
     
     let name: String
     let typeLine: String
-    let manaCost: String
+    var manaCost: String
     let oracleText: String
     var colorIdentity: [String]?
     var colors: [String] {

@@ -100,6 +100,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FB87CDFD27591127009B2BD4 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FB8F75E22448A06300140DF1 /* DeckController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		FB8F759F24489F9F00140DF1 = {
 			isa = PBXGroup;
 			children = (
@@ -123,12 +131,12 @@
 		FB8F75AA24489F9F00140DF1 /* ColoredManaCalcSB */ = {
 			isa = PBXGroup;
 			children = (
+				FB87CDFD27591127009B2BD4 /* Controllers */,
 				FB8F75DB2448A00000140DF1 /* Models */,
 				FB8F75E42448A57D00140DF1 /* Views */,
 				FB8F75AB24489F9F00140DF1 /* AppDelegate.swift */,
 				FB8F75AD24489F9F00140DF1 /* SceneDelegate.swift */,
 				FB8F75B124489F9F00140DF1 /* Main.storyboard */,
-				FB8F75E22448A06300140DF1 /* DeckController.swift */,
 				FB8F75B424489FA100140DF1 /* Assets.xcassets */,
 				FB8F75B624489FA100140DF1 /* LaunchScreen.storyboard */,
 				FB8F75B924489FA100140DF1 /* Info.plist */,

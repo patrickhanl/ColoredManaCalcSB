@@ -30,19 +30,23 @@ class CardCostTableViewCell: UITableViewCell {
         if card.colorIdentity == [] {
             let manaCostChar: Character = card.manaCost[card.manaCost.index(card.manaCost.startIndex, offsetBy: 1)]
             let manaCostInt = Int(String(manaCostChar))
-            detailString += String(getNumSources(from: String(repeating: "C", count: manaCostInt!)))
-            detailString += " colorless sources"
+            detailString += String(getNumSources(from: String(repeating: "C", count: manaCostInt!), numCardsInDeck: DeckController.shared.deck.numCardsMain))
+            detailString += " sources of any color"
         } else {
             for (color, cost) in card.colorClassDict(){
-                    detailString += String(getNumSources(from: cost))
+                detailString += String(getNumSources(from: cost, numCardsInDeck: DeckController.shared.deck.numCardsMain))
                     
                     detailString += " " + color + " sources\n"
             }
-            detailString.remove(at: detailString.index(before: detailString.endIndex))
+            
+            if detailString.count > 0 {
+                detailString.removeLast()
+            } else {
+                detailString = "This card has no mana cost"
+            }
         }
         toCastCardName.text = "To cast \(card.name) on turn \(card.drop), you need:"
         youNeedSources.text = detailString
-        
     }
 
 }

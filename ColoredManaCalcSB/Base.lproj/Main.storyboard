@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vk3-Kb-qc3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vk3-Kb-qc3">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -124,7 +124,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="deckListCell" textLabel="7Ea-Zp-CAZ" detailTextLabel="am8-UG-w3l" style="IBUITableViewCellStyleValue1" id="TQ2-PH-xef">
-                                <rect key="frame" x="0.0" y="72" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="88.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="TQ2-PH-xef" id="WwM-CF-B5b">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -213,7 +213,7 @@
                             <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                         </view>
                         <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="pJI-te-1af">
-                            <rect key="frame" x="0.0" y="143.5" width="414" height="44"/>
+                            <rect key="frame" x="0.0" y="154.5" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <state key="normal" title="Show me the mana!"/>
                             <connections>
@@ -223,7 +223,7 @@
                         </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="setDropCell" id="hZt-pe-8pp" customClass="SetDropTableViewCell" customModule="ColoredManaCalcSB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="72" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="88.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hZt-pe-8pp" id="l58-aQ-cRz">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -285,7 +285,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="colorCostCell" rowHeight="80" id="vfg-rs-8pV" customClass="ColorCostTableViewCell" customModule="ColoredManaCalcSB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="99.5" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="93.5" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vfg-rs-8pV" id="LI3-aO-LQX">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -325,7 +325,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cardCostCell" rowHeight="98" id="PeP-dr-4IU" customClass="CardCostTableViewCell" customModule="ColoredManaCalcSB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="179.5" width="414" height="98"/>
+                                <rect key="frame" x="0.0" y="173.5" width="414" height="98"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PeP-dr-4IU" id="QiL-3h-bR7">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="98"/>
@@ -353,7 +353,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="costCell" rowHeight="88" id="Gv4-jf-34k" customClass="MostExpensiveCardColorCell" customModule="ColoredManaCalcSB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="277.5" width="414" height="88"/>
+                                <rect key="frame" x="0.0" y="271.5" width="414" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gv4-jf-34k" id="DCk-Hb-REp">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>

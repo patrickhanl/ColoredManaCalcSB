@@ -20,20 +20,87 @@ class DeckListTableViewController: UITableViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        //always set shared deck to new empty deck on load
         DeckController.shared.deck = Deck()
-
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        // section for each deck size (ltd, std, cmdr)
+        return 3
     }
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return DeckController.shared.sectionTitles[section]
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return DeckController.shared.deckList.count
+        // num of rows in each section = num of decks saved for that format
+        switch section {
+        case 0:
+            return DeckController.shared.sixtyCardDeckList.count
+        case 1:
+            return DeckController.shared.hundredCardDeckList.count
+        case 2:
+            return DeckController.shared.fortyCardDeckList.count
+        default:
+            return 0
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "deckListCell", for: indexPath)
+        
+        //each cell is a deck, if no decks tell user to add deck
+        
+        cell.textLabel?.text = "No Decks, tap + to add a deck"
+        cell.detailTextLabel?.text = ""
+        
+        switch indexPath.section {
+        case 0:
+            if DeckController.shared.sixtyCardDeckList.count > 0 {
+                cell.textLabel?.text = DeckController.shared.sixtyCardDeckList[indexPath.row].name
+                cell.detailTextLabel?.text = DeckController.shared.sixtyCardDeckList[indexPath.row].colors.joined()
+            }
+        case 1:
+            if DeckController.shared.hundredCardDeckList.count > 0 {
+                cell.textLabel?.text = DeckController.shared.hundredCardDeckList[indexPath.row].name
+                cell.detailTextLabel?.text = DeckController.shared.hundredCardDeckList[indexPath.row].colors.joined()
+            }
+            
+        case 2:
+            if DeckController.shared.fortyCardDeckList.count > 0 {
+                cell.textLabel?.text = DeckController.shared.fortyCardDeckList[indexPath.row].name
+                cell.detailTextLabel?.text = DeckController.shared.fortyCardDeckList[indexPath.row].colors.joined()
+            }
+            
+        default:
+            cell.textLabel?.text = "Error"
+        }
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        //tap the cell, load the deck, go to Mana Description scene
+        
+        switch indexPath.section {
+        case 0:
+            DeckController.shared.deck = DeckController.shared.sixtyCardDeckList[indexPath.row]
+        case 1:
+            DeckController.shared.deck = DeckController.shared.hundredCardDeckList[indexPath.row]
+        case 2:
+            DeckController.shared.deck = DeckController.shared.fortyCardDeckList[indexPath.row]
+        default:
+            DeckController.shared.deck = Deck()
+        }
+
+        if indexPath.section == 0 && DeckController.shared.sixtyCardDeckList.count > 0{
+            DeckController.shared.deck = DeckController.shared.sixtyCardDeckList[indexPath.row]
+        } else if DeckController.shared.fortyCardDeckList.count > 0 {
+            DeckController.shared.deck = DeckController.shared.fortyCardDeckList[indexPath.row]
+        }
     }
     
     func updateUI () {
@@ -42,28 +109,18 @@ class DeckListTableViewController: UITableViewController {
         }
     }
     
-    
-    
     @IBAction func unwindToDecks(unwindSegue: UIStoryboardSegue) {
-        DeckController.shared.deckList.append(DeckController.shared.deck)
+        
+        if DeckController.shared.deck.numCardsMain <= 59 {
+            DeckController.shared.fortyCardDeckList.append(DeckController.shared.deck)
+        } else if DeckController.shared.deck.numCardsMain >= 60 && DeckController.shared.deck.numCardsMain < 100 {
+            DeckController.shared.sixtyCardDeckList.append(DeckController.shared.deck)
+        } else if DeckController.shared.deck.numCardsMain >= 100 {
+            DeckController.shared.hundredCardDeckList.append(DeckController.shared.deck)
+        }
+        
         DeckController.shared.saveDecks()
         self.updateUI()
-    }
-
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "deckListCell", for: indexPath)
-
-        cell.textLabel?.text = DeckController.shared.deckList[indexPath.row].name
-        
-        cell.detailTextLabel?.text = DeckController.shared.deckList[indexPath.row].colors.joined()
-
-        return cell
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        DeckController.shared.deck = DeckController.shared.deckList[indexPath.row]
     }
 
     /*
@@ -78,8 +135,13 @@ class DeckListTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
+            if indexPath.section == 0 {
             // Delete the row from the data source
-            DeckController.shared.deckList.remove(at: indexPath.row)
+            //add in 100 card here
+                DeckController.shared.sixtyCardDeckList.remove(at: indexPath.row)
+            } else {
+                DeckController.shared.fortyCardDeckList.remove(at: indexPath.row)
+            }
             tableView.deleteRows(at: [indexPath], with: .fade)
             DeckController.shared.saveDecks()
             

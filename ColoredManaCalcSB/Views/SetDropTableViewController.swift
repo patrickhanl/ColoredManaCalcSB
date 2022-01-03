@@ -13,7 +13,6 @@ class SetDropTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         DeckController.shared.fetchCards(completion: self.updateUI)
-        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

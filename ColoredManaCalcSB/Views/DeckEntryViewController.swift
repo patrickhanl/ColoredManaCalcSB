@@ -46,15 +46,13 @@ class DeckEntryViewController: UIViewController {
         do {
             try DeckController.shared.buildDeckDicts(with: deckEntryTextView.text)
             
-
         } catch {
             present(noDeckAlert, animated: true, completion: nil)
         }
         
         if deckNameTextField.hasText {
             DeckController.shared.deck.name = deckNameTextField.text!
-        } else { present(noDeckNameAlert, animated: true, completion: nil)
-        }
+        } else { present(noDeckNameAlert, animated: true, completion: nil) }
     }
     
     @IBAction func copyButtonTapped(_ sender: UIBarButtonItem) {
