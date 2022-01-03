@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "closure #1 in DeckController.fetchCards(completion:):DeckController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "cards">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "DeckListTableViewController.prepare(for:sender:):DeckListTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.shared.decklist[1]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
