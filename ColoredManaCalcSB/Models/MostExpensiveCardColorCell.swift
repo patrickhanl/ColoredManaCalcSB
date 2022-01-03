@@ -27,7 +27,7 @@ class MostExpensiveCardColorCell: UITableViewCell {
     
     func update (with color: String, card: Card, num: String) {
         cardLabel.text = "The most expensive \(color) card you have is \(card.name)  (\(card.manaCost))."
-        costLabel.text = "To cast it on turn \(card.drop), you need \(getNumSources(from: card.colorClassDict()[color]!)) \(color) sources. You have \(num) \(color) sources"
+        costLabel.text = "To cast it on turn \(card.drop), you need \(getNumSources(from: card.colorClassDict()[color]!, numCardsInDeck: DeckController.shared.deck.numCardsMain)) \(color) sources. You have \(num) \(color) sources"
     }
 
 }

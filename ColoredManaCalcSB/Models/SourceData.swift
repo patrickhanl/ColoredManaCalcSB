@@ -8,36 +8,72 @@
 
 import Foundation
 
-let sourceTable = ["0":0, "C":14, "1C":13, "CC":20, "2C":11, "1CC":18, "CCC":23, "3C":10, "2CC":16, "1CCC":20, "4C":9, "3CC":14, "2CCC":18, "5C":8, "4CC":13, "3CCC":16]
+let sourceTableConstructed = ["0":0, "C":14, "1C":13, "CC":20, "2C":11, "1CC":18, "CCC":23, "3C":10, "2CC":16, "1CCC":20, "4C":9, "3CC":14, "2CCC":18, "5C":8, "4CC":13, "3CCC":16]
 
-func getNumSources (from colorCosts: String) -> Int {
-    switch colorCosts {
-    case "0":
-        return 0
-    case "5C":
-        return 8
-    case "4C":
-        return 9
-    case "3C":
-        return 10
-    case "2C":
-        return 11
-    case "1C", "4CC":
-        return 13
-    case "C", "3CC":
-        return 14
-    case "2CC", "3CCC":
-        return 16
-    case "1CC", "2CCC":
-        return 18
-    case "CC", "1CCC":
-        return 20
-    case "CCC":
-        return 23
-        
-    default:
-        return -1
-    }
+let sourceTableLimited = ["0":0, "C":14, "1C":13, "CC":20, "2C":11, "1CC":18, "CCC":23, "3C":10, "2CC":16, "1CCC":20, "4C":9, "3CC":14, "2CCC":18, "5C":8, "4CC":13, "3CCC":16]
+
+func getNumSources (from colorCosts: String, numCardsInDeck: Int) -> Int {
+    if numCardsInDeck <= 59 {
+        switch colorCosts {
+        case "0":
+            return 0
+        case "5C":
+            return 6
+        case "4C":
+            return 6
+        case "3C":
+            return 7
+        case "2C":
+            return 8
+        case "1C", "4CC":
+            return 9
+        case "C", "3CC":
+            return 10
+        case "2CC", "3CCC":
+            return 11
+        case "1CC":
+            return 12
+        case "2CCC":
+            return 13
+        case "CC", "1CCC":
+            return 14
+        case "CCC":
+            return 16
+            
+        default:
+            return -1
+            }
+    } else if numCardsInDeck > 59 && numCardsInDeck < 100 {
+        switch colorCosts {
+        case "0":
+            return 0
+        case "5C":
+            return 8
+        case "4C":
+            return 9
+        case "3C":
+            return 10
+        case "2C":
+            return 11
+        case "1C", "4CC":
+            return 13
+        case "C", "3CC":
+            return 14
+        case "2CC", "3CCC":
+            return 16
+        case "1CC", "2CCC":
+            return 18
+        case "CC", "1CCC":
+            return 20
+        case "CCC":
+            return 23
+            
+        default:
+            return -1
+            }
+        }
+    //add in commander here maybe later?
+    return -1
 }
 
 /*enum colorCosts: String {

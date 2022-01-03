@@ -28,7 +28,7 @@ class ColorCostTableViewCell: UITableViewCell {
     func update(with color: String) {
         colorLabel.text = color
         hasSourcesLabel.text = "Deck has sources: " + String(DeckController.shared.deck.numLandsForColor[color]!)
-        needsSourcesLabel.text = "Deck needs sources " + String(getNumSources(from: DeckController.shared.deck.mostExpensiveCardForColor[color]!.colorClassDict()[color]!))
+        needsSourcesLabel.text = "Deck needs sources " + String(getNumSources(from: DeckController.shared.deck.mostExpensiveCardForColor[color]!.colorClassDict()[color]!, numCardsInDeck: DeckController.shared.deck.numCardsMain))
     }
     
 }

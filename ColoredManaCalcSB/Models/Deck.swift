@@ -13,8 +13,10 @@ struct Deck: Codable {
     var name: String
     var mainCardArray: [Card]
     var sideCardArray: [Card]
-    var mainText: [String:Int]
-    var sideText: [String:Int]
+    var mainTextCountDict: [String:Int]
+    var sideTextCountDict: [String:Int]
+    var numCardsMain: Int
+    var numCardsSide: Int
     var colors: [String]
     var mostExpensiveCardForColor: [String:Card]
     var landCount: Int {
@@ -47,13 +49,15 @@ struct Deck: Codable {
         return colorSourcesDict
         }
 
-    init(name: String = "", mainCardArray: [Card] = [], sideCardArray: [Card] = [], mainText: [String:Int] = [:], sideText: [String:Int] = [:], colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
+    init(name: String = "", mainCardArray: [Card] = [], sideCardArray: [Card] = [], mainText: [String:Int] = [:], sideText: [String:Int] = [:], numCardsMain: Int = 0, numCardsSide: Int = 0, colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
         
         self.name = "New Deck"
         self.mainCardArray = mainCardArray
         self.sideCardArray = sideCardArray
-        self.mainText = mainText
-        self.sideText = sideText
+        self.mainTextCountDict = mainText
+        self.sideTextCountDict = sideText
+        self.numCardsMain = numCardsMain
+        self.numCardsSide = numCardsSide
         self.colors = []
         self.mostExpensiveCardForColor = mostExpensiveCardForColor
         
