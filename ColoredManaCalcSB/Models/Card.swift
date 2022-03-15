@@ -39,6 +39,66 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         }
         return mod_str.components(separatedBy: "}").filter({$0 != ""})
     }
+    func numSourcesPerColor(_ sortLowHi: Bool) -> String {
+        var numSourcesColor: String = ""
+        var line:String = ""
+        var lines:[String] = [String]()
+        //If no mana cost, return such
+        if self.manaCost == "" {
+            return "This card has no mana cost"
+        }
+        //CARD HAS NO COLORS IN CASTING COST
+        //get number of lands needed to hit the drop
+        if self.colorCost == [] {
+            /*let manaCostInt = Int(self.manaCost.dropFirst().dropLast())
+            let numSources = getNumSources(from: String(repeating: "C", count: manaCostInt!), numCardsInDeck: DeckController.shared.deck.numCardsMain)
+            if numSources == -1 {
+                return "This card has a high mana value or color requirement"
+            }
+            numSourcesColor += String(numSources)
+            numSourcesColor += " sources of any color"*/
+            return "This card has no colored mana cost"
+        //CARD HAS COLORS IN COST
+        //get number of colored sources needed to cast on curve per Mr. Karsten
+        } else {
+            for mtgColor in orderedColors {
+                guard let cost = self.colorClassDict()[mtgColor] else {
+                    continue
+                }
+                let numSources = getNumSources(from: cost, numCardsInDeck: DeckController.shared.deck.numCardsMain)
+                //if high cost, show message
+                if numSources == -1 {
+                    return "This card has a high mana value or color requirement"
+                }
+                line = String(numSources)
+                line += " " + mtgColor + " sources\n"
+                lines.append(line)
+            }
+            lines.sort { lhs, rhs in
+                let lhsSubStrings = lhs.split(separator: " ")
+                let rhsSubStrings = rhs.split(separator: " ")
+                if (sortLowHi) {
+                    if (lhsSubStrings[0] == rhsSubStrings[0]) {
+                        return orderedColorsDict[String(lhsSubStrings[1])]! < orderedColorsDict[String(rhsSubStrings[1])]!
+                    } else {
+                        return Int(lhsSubStrings[0])! > Int(rhsSubStrings[0])!
+                    }
+                } else {
+                    if (lhsSubStrings[0] == rhsSubStrings[0]) {
+                        return orderedColorsDict[String(lhsSubStrings[1])]! < orderedColorsDict[String(rhsSubStrings[1])]!
+                    } else {
+                        return Int(lhsSubStrings[0])! < Int(rhsSubStrings[0])!
+                    }
+                }
+            }
+            //add lines in sorted array to return string and remove last newline char
+            for costString in lines {
+                numSourcesColor += costString
+            }
+            numSourcesColor.removeLast()
+        }
+        return numSourcesColor
+    }
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -61,8 +121,6 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         cardFaces = try container.decodeIfPresent([Card].self, forKey: .cardFaces)
         drop = try container.decodeIfPresent(Int.self, forKey: .drop) ?? 0
         numInDeck = try container.decodeIfPresent(Int.self, forKey: .numInDeck) ?? 0
-        
-        
     }
     
     mutating func setDrop() {
@@ -76,12 +134,13 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         pipList.removeLast()
 
         for pip in pipList {
-            if "123456789".contains(pip) {derivedCMC += Int(pip)!} else if pip.contains("P") {derivedCMC += 0} else {derivedCMC+=1}
+            if "123456789101112131415".contains(pip) {derivedCMC += Int(pip)!} else if pip.contains("P") {derivedCMC += 0} else {derivedCMC+=1}
         }
         
         self.drop = derivedCMC
     }
     
+    //returns a dict where key is color as char (WUBRG) & value is num color pips as char "C" (CCC)
     func colorClassDict() ->  [String:String] {
         var pipCount = [String:Int]()
         var colorDict = [String:String]()

@@ -8,14 +8,21 @@
 
 import UIKit
 
+@available(iOS 15.0, *)
 class ManaDescriptionTableViewController: UITableViewController {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        DeckController.shared.setMostExpensiveCard()
+        self.updateData()
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(ManaDescriptionHeader.self, forHeaderFooterViewReuseIdentifier: "sectionHeader")
         
-        self.updateData()
-
+    
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -28,9 +35,28 @@ class ManaDescriptionTableViewController: UITableViewController {
     var colorArray: [String] = []
     var landArray: [Card] = []
     var spellArray: [Card] = []
+    var spellArrayAZ = true
+    var spellArrayLowHi = false
+    
+    struct headerData {
+        var leftLabelText: String?
+        var rightLabelText: String?
+        var leftButtonText: String?
+        var rightButtonText: String?
+        
+    }
+    
+    var header0: headerData = headerData(leftLabelText: "Most Expensive Card for Each Color")
+    var header1: headerData = headerData(leftLabelText: "Color", rightLabelText: "Number of Sources")
+    var header2: headerData = headerData(leftButtonText: "Card / Drop ", rightButtonText: "Sources to Cast on Curve ")
+    
     
     func updateData() {
-        self.colorArray = Array(DeckController.shared.deck.mostExpensiveCardForColor.keys)
+        for mtgColor in orderedColors {
+            if (DeckController.shared.deck.mostExpensiveCardForColor.keys.contains(mtgColor)) {
+                colorArray.append(mtgColor)
+            }
+        }
         self.landArray = DeckController.shared.deck.mainCardArray.filter({$0.typeLine.contains("Land")})
         self.spellArray = DeckController.shared.deck.mainCardArray.filter({!$0.typeLine.contains("Land")})
     }
@@ -44,13 +70,13 @@ class ManaDescriptionTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         
         switch section {
+        case 0:
+            return DeckController.shared.deck.mostExpensiveCardForColor.count
         case 1:
             return DeckController.shared.deck.colors.count
         case 2:
             return spellArray.count
-        case 0:
-            return DeckController.shared.deck.mostExpensiveCardForColor.count
-            
+
         default: return 1
         }
     }
@@ -61,19 +87,19 @@ class ManaDescriptionTableViewController: UITableViewController {
         
         switch section {
         case 0:
-            headerView.leftLabel.text = "Most Expensive Card for Each Color"
-            headerView.rightLabel.text = ""
+            headerView.update(with: header0)
             headerView.backgroundView = UIView()
         case 1:
-            headerView.leftLabel.text = "Color"
-            headerView.rightLabel.text = "Number of Sources"
+            headerView.update(with: header1)
             headerView.backgroundView = UIView()
         case 2:
-            headerView.leftLabel.text = "Card / Drop"
-            headerView.rightLabel.text = "Sources to Cast on Curve"
+            headerView.update(with: header2)
+            
+            headerView.leftButton.addTarget(self, action: #selector(CDButtonSort), for: .touchUpInside)
+            headerView.rightButton.addTarget(self, action: #selector(sourcesToCastButtonSort), for: .touchUpInside)
             headerView.backgroundView = UIView()
         default:
-            headerView.leftLabel.text = "Header"
+            headerView.rightLabel.text = "Header"
             
         }
         headerView.backgroundView?.backgroundColor = UIColor.opaqueSeparator
@@ -87,11 +113,21 @@ class ManaDescriptionTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         switch indexPath.section {
+            
+        case 0:
+            //MostExpensive Card Color and cell
+            let color = colorArray[indexPath.row]
+            
+            let mostExpensiveCardDict = DeckController.shared.deck.mostExpensiveCardForColor
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "costCell", for: indexPath) as! MostExpensiveCardColorCell
+            
+            cell.update(with: color, card: mostExpensiveCardDict[color]!, num: String(DeckController.shared.deck.numLandsForColor[color]!))
+            
+            return cell
         
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "colorCostCell", for: indexPath) as! ColorCostTableViewCell
-
-            // Configure the cell...
             
             let color = colorArray[indexPath.row]
             cell.update(with: color)
@@ -103,19 +139,7 @@ class ManaDescriptionTableViewController: UITableViewController {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "cardCostCell", for: indexPath) as! CardCostTableViewCell
             
-            cell.update(with: card)
-            
-            return cell
-        
-        case 0:
-            //MostExpensive Card Color and cell
-            let color = colorArray[indexPath.row]
-            
-            let mostExpensiveCardDict = DeckController.shared.deck.mostExpensiveCardForColor
-            
-            let cell = tableView.dequeueReusableCell(withIdentifier: "costCell", for: indexPath) as! MostExpensiveCardColorCell
-            
-            cell.update(with: color, card: mostExpensiveCardDict[color]!, num: String(DeckController.shared.deck.numLandsForColor[color]!))
+            cell.update(with: card, spellArrayLowHi)
             
             return cell
             
@@ -130,6 +154,60 @@ class ManaDescriptionTableViewController: UITableViewController {
         default:
             return 88.0
         }
+    }
+    
+    @objc func CDButtonSort() {
+        if (spellArrayAZ) {
+            spellArray.sort(by: >)
+            spellArrayAZ = false
+            //header2.leftButtonText = "Card / Drop"
+        } else {
+            spellArray.sort(by: <)
+            spellArrayAZ = true
+            //header2.leftButtonText = "Card / Drop"
+        }
+        tableView.reloadData()
+    }
+    
+    @objc func sourcesToCastButtonSort () {
+        if (spellArrayLowHi) {
+            spellArray.sort { lhs, rhs in
+                let lhsSeparated = lhs.numSourcesPerColor(spellArrayLowHi).split(separator: " ")
+                let rhsSeparated = rhs.numSourcesPerColor(spellArrayLowHi).split(separator: " ")
+                
+                guard let lhsInt = Int(lhsSeparated.first!) else {
+                    return false
+                }
+                guard let rhsInt = Int(rhsSeparated.first!) else {
+                    return true
+                }
+                if lhsInt == rhsInt {
+                    return orderedColorsDict[String(lhsSeparated[1])]! < orderedColorsDict[String(rhsSeparated[1])]!
+                }
+                return lhsInt > rhsInt
+            }
+            //header2.rightButtonText = "Sources to Cast on Curve ^"
+            spellArrayLowHi = false
+        } else {
+            spellArray.sort { lhs, rhs in
+                let lhsSeparated = lhs.numSourcesPerColor(spellArrayLowHi).split(separator: " ")
+                let rhsSeparated = rhs.numSourcesPerColor(spellArrayLowHi).split(separator: " ")
+                
+                guard let lhsInt = Int(lhs.numSourcesPerColor(spellArrayLowHi).split(separator: " ").first!) else {
+                    return false
+                }
+                guard let rhsInt = Int(rhs.numSourcesPerColor(spellArrayLowHi).split(separator: " ").first!) else {
+                    return true
+                }
+                if lhsInt == rhsInt {
+                    return orderedColorsDict[String(lhsSeparated[1])]! < orderedColorsDict[String(rhsSeparated[1])]!
+                }
+                return lhsInt < rhsInt
+            }
+            //header2.rightButtonText = "Sources to Cast on Curve v"
+            spellArrayLowHi = true
+        }
+        tableView.reloadData()
     }
     
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {

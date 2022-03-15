@@ -23,8 +23,9 @@ class SetDropTableViewCell: UITableViewCell {
     
     @IBOutlet weak var cardName: UILabel!
     @IBOutlet weak var dropLabel: UILabel!
-    
     @IBOutlet weak var dropStepperValue: UIStepper!
+    
+    var callback: ((Int)-> ())?
     
     
     @IBAction func dropStepper(_ sender: UIStepper) {
@@ -32,6 +33,7 @@ class SetDropTableViewCell: UITableViewCell {
         for index in 0..<DeckController.shared.deck.mainCardArray.count {
             if DeckController.shared.deck.mainCardArray[index].name == cardName.text{
                 DeckController.shared.deck.mainCardArray[index].drop = Int(dropStepperValue.value)
+                callback?(Int(dropStepperValue.value))
             }
         }
     }

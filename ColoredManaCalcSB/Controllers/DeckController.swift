@@ -100,14 +100,10 @@ class DeckController {
                             faces[1].manaCost = disturbCost
                         }
                         deck.mainCardArray.append(faces[index])
-                        
-                        //if adding numindeck here, do we need it later?? I think so as we need main card for reference
-                        //deck.numCardsMain += deck.mainCardArray[deck.mainCardArray.count - 1].numInDeck
                     }
                 } else {
                     deck.mainCardArray.append(card)
                     deck.mainCardArray[deck.mainCardArray.count - 1].numInDeck = deck.mainTextCountDict[processedName]!
-                    //deck.numCardsMain += deck.mainCardArray[deck.mainCardArray.count - 1].numInDeck
                 }
             }
             
@@ -124,14 +120,11 @@ class DeckController {
                             faces[1].manaCost = disturbCost
                         }
                         deck.sideCardArray.append(faces[index])
-                        
-                        //if adding numindeck here, do we need it later?? I think so as we need main card for reference
-                        //deck.numCardsMain += deck.mainCardArray[deck.mainCardArray.count - 1].numInDeck
+
                     }
                 } else {
                     deck.sideCardArray.append(card)
                     deck.sideCardArray[deck.sideCardArray.count - 1].numInDeck = deck.sideTextCountDict[processedName]!
-                    //deck.numCardsSide += deck.sideCardArray[deck.sideCardArray.count - 1].numInDeck
                 }
             }
         }
@@ -139,17 +132,19 @@ class DeckController {
         
     }
 
-    func setAttributes () {
+    func setDropAndColors () {
         for index in 0..<deck.mainCardArray.count {
             deck.mainCardArray[index].setDrop()
-            //is below necessary if i can add in process??
-            if (deck.mainCardArray[index].numInDeck < 0) {
-                deck.mainCardArray[index].numInDeck = deck.mainTextCountDict[deck.mainCardArray[index].name.lowercased().filter {okChars.contains($0)}] ?? -1
-            }
             
             for color in deck.mainCardArray[index].colors {
                 if !deck.colors.contains(color) {deck.colors.append(color)}
             }
+        }
+    }
+    
+    func setMostExpensiveCard () {
+        deck.mostExpensiveCardForColor = [String:Card]()
+        for index in 0..<deck.mainCardArray.count {
             for (color, cost) in deck.mainCardArray[index].colorClassDict() {
                 //is guard best here?
                 guard let mostExpensiveCard = deck.mostExpensiveCardForColor[color] else {
@@ -201,7 +196,7 @@ class DeckController {
             if let data = data,
                 let cards = try? jsonDecoder.decode(Cards.self, from: data) {
                 self.process(cards.cards)
-                self.setAttributes()
+                self.setDropAndColors()
                 completion()
             }
         }
