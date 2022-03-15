@@ -24,29 +24,9 @@ class CardCostTableViewCell: UITableViewCell {
     @IBOutlet weak var toCastCardName: UILabel!
     @IBOutlet weak var youNeedSources: UILabel!
     
-    func update(with card: Card) {
-        var detailString: String = ""
-        
-        if card.colorIdentity == [] {
-            let manaCostChar: Character = card.manaCost[card.manaCost.index(card.manaCost.startIndex, offsetBy: 1)]
-            let manaCostInt = Int(String(manaCostChar))
-            detailString += String(getNumSources(from: String(repeating: "C", count: manaCostInt!), numCardsInDeck: DeckController.shared.deck.numCardsMain))
-            detailString += " sources of any color"
-        } else {
-            for (color, cost) in card.colorClassDict(){
-                detailString += String(getNumSources(from: cost, numCardsInDeck: DeckController.shared.deck.numCardsMain))
-                    
-                    detailString += " " + color + " sources\n"
-            }
-            
-            if detailString.count > 0 {
-                detailString.removeLast()
-            } else {
-                detailString = "This card has no mana cost"
-            }
-        }
+    func update(with card: Card, _ sortLowHi: Bool) {
         toCastCardName.text = "To cast \(card.name) on turn \(card.drop), you need:"
-        youNeedSources.text = detailString
+        youNeedSources.text = card.numSourcesPerColor(!sortLowHi)
     }
 
 }

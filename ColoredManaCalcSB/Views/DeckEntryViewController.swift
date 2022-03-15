@@ -26,7 +26,11 @@ class DeckEntryViewController: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismissMyKeyboard))
         self.view.addGestureRecognizer(tap)
         
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //always set shared deck to new empty deck on load
+        DeckController.shared.deck = Deck()
     }
     
     @IBOutlet weak var deckEntryTextView: UITextView!
@@ -80,14 +84,17 @@ class DeckEntryViewController: UIViewController {
         deckNameTextField.endEditing(true)
     }
     
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        
+        if let setDropDestination = segue.destination as? SetDropTableViewController {
+            print("fetching...")
+            DeckController.shared.fetchCards(completion: setDropDestination.updateUI)
+        }
     }
-    */
 
 }

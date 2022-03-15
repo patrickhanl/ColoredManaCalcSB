@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vk3-Kb-qc3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vk3-Kb-qc3">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -274,10 +274,9 @@
         <scene sceneID="On4-ni-ya8">
             <objects>
                 <tableViewController id="hZt-mq-Kcp" customClass="ManaDescriptionTableViewController" customModule="ColoredManaCalcSB" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="singleLineEtched" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="aVZ-Ze-a0K">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="aVZ-Ze-a0K">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="pqw-ZW-dMA" userLabel="costCellHeader">
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -285,7 +284,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="colorCostCell" rowHeight="80" id="vfg-rs-8pV" customClass="ColorCostTableViewCell" customModule="ColoredManaCalcSB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="93.5" width="414" height="80"/>
+                                <rect key="frame" x="0.0" y="88.5" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vfg-rs-8pV" id="LI3-aO-LQX">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
@@ -325,7 +324,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cardCostCell" rowHeight="98" id="PeP-dr-4IU" customClass="CardCostTableViewCell" customModule="ColoredManaCalcSB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="173.5" width="414" height="98"/>
+                                <rect key="frame" x="0.0" y="168.5" width="414" height="98"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PeP-dr-4IU" id="QiL-3h-bR7">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="98"/>
@@ -353,7 +352,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="costCell" rowHeight="88" id="Gv4-jf-34k" customClass="MostExpensiveCardColorCell" customModule="ColoredManaCalcSB" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="271.5" width="414" height="88"/>
+                                <rect key="frame" x="0.0" y="266.5" width="414" height="88"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Gv4-jf-34k" id="DCk-Hb-REp">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
@@ -393,12 +392,19 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="26p-5n-7bF">
-                        <barButtonItem key="rightBarButtonItem" title="Save" id="0rS-NQ-tsi">
-                            <connections>
-                                <action selector="saveButtonTapped:" destination="hZt-mq-Kcp" id="m7A-lv-SLT"/>
-                                <segue destination="HhA-Rq-Ngu" kind="unwind" unwindAction="unwindToDecksWithUnwindSegue:" id="xUW-NE-Y87"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Save" id="0rS-NQ-tsi">
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="hZt-mq-Kcp" id="m7A-lv-SLT"/>
+                                    <segue destination="HhA-Rq-Ngu" kind="unwind" unwindAction="unwindToDecksWithUnwindSegue:" id="xUW-NE-Y87"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Edit" id="KgV-m0-wY4">
+                                <connections>
+                                    <segue destination="b08-Nb-xgb" kind="show" id="0bI-5A-h8n"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JaR-gl-JsB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -409,6 +415,7 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="GGM-97-Mf9"/>
+        <segue reference="qpS-h2-tr5"/>
     </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="labelColor">

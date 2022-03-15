@@ -12,16 +12,28 @@ class SetDropTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        DeckController.shared.fetchCards(completion: self.updateUI)
-
+        updateUI()
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
 
     // MARK: - Table view data source
+    
+    var nonLandCards: [Card] = []
+    
+    func updateData() {
+        for index in 0..<DeckController.shared.deck.mainCardArray.count {
+            if !DeckController.shared.deck.mainCardArray[index].typeLine.contains("Land") {
+                nonLandCards.append(DeckController.shared.deck.mainCardArray[index])
+            }
+        }
+    }
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -31,38 +43,25 @@ class SetDropTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        var count = 0
-        
-        for card in DeckController.shared.deck.mainCardArray {
-            if !card.typeLine.contains("Land") {
-                count += 1
-            }
-        }
-        
-        return count
+        return nonLandCards.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "setDropCell", for: indexPath) as! SetDropTableViewCell
         
-        var nonLandCards: [Card] = []
-        
-        for index in 0..<DeckController.shared.deck.mainCardArray.count {
-            if !DeckController.shared.deck.mainCardArray[index].typeLine.contains("Land") {
-                DeckController.shared.deck.mainCardArray[index].setDrop()
-                nonLandCards.append(DeckController.shared.deck.mainCardArray[index])
-            }
-        }
-        
         let card = nonLandCards[indexPath.row]
-        
         cell.update(with: card)
+        //this probably shouldn't be directly modified here, it should call some function in the deck controller
+        cell.callback = { (val) in
+            self.nonLandCards[indexPath.row].drop = val
+        }
 
         return cell
     }
     
     func updateUI () {
+        updateData()
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -71,7 +70,6 @@ class SetDropTableViewController: UITableViewController {
     
     
     @IBAction func manaButton(_ sender: UIButton) {
-
     }
     
     /*

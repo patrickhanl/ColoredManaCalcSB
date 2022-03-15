@@ -18,11 +18,6 @@ class DeckListTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //always set shared deck to new empty deck on load
-        DeckController.shared.deck = Deck()
-    }
 
     // MARK: - Table view data source
 
@@ -39,11 +34,11 @@ class DeckListTableViewController: UITableViewController {
         // num of rows in each section = num of decks saved for that format
         switch section {
         case 0:
-            return DeckController.shared.sixtyCardDeckList.count
+            return DeckController.shared.sixtyCardDeckList.count > 0 ? DeckController.shared.sixtyCardDeckList.count : 1
         case 1:
-            return DeckController.shared.hundredCardDeckList.count
+            return DeckController.shared.hundredCardDeckList.count > 0 ? DeckController.shared.hundredCardDeckList.count : 1
         case 2:
-            return DeckController.shared.fortyCardDeckList.count
+            return DeckController.shared.fortyCardDeckList.count > 0 ? DeckController.shared.fortyCardDeckList.count : 1
         default:
             return 0
         }
@@ -54,25 +49,33 @@ class DeckListTableViewController: UITableViewController {
         
         //each cell is a deck, if no decks tell user to add deck
         
-        cell.textLabel?.text = "No Decks, tap + to add a deck"
+        cell.textLabel?.text = "No decks, tap \"+\" to add a deck"
         cell.detailTextLabel?.text = ""
+        
         
         switch indexPath.section {
         case 0:
             if DeckController.shared.sixtyCardDeckList.count > 0 {
                 cell.textLabel?.text = DeckController.shared.sixtyCardDeckList[indexPath.row].name
                 cell.detailTextLabel?.text = DeckController.shared.sixtyCardDeckList[indexPath.row].colors.joined()
+            } else {
+                cell.isUserInteractionEnabled = false
             }
+            
         case 1:
             if DeckController.shared.hundredCardDeckList.count > 0 {
                 cell.textLabel?.text = DeckController.shared.hundredCardDeckList[indexPath.row].name
                 cell.detailTextLabel?.text = DeckController.shared.hundredCardDeckList[indexPath.row].colors.joined()
+            } else {
+                cell.isUserInteractionEnabled = false
             }
             
         case 2:
             if DeckController.shared.fortyCardDeckList.count > 0 {
                 cell.textLabel?.text = DeckController.shared.fortyCardDeckList[indexPath.row].name
                 cell.detailTextLabel?.text = DeckController.shared.fortyCardDeckList[indexPath.row].colors.joined()
+            } else {
+                cell.isUserInteractionEnabled = false
             }
             
         default:
@@ -169,12 +172,11 @@ class DeckListTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    /*
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
         
         
-    }*/
+        
+    }
 
 }
