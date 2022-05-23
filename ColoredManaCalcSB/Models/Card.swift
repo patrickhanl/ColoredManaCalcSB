@@ -27,6 +27,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         return colorString.split(separator: "}").map({String($0)})
     }
     var cardFaces: [Card]?
+    let layout: String
     var hybrid: Bool {return self.manaCost.contains("/")}
     var gold: Bool {return self.colors.count > 0}
     var x: Bool {return self.manaCost.contains("X")}
@@ -39,25 +40,22 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         }
         return mod_str.components(separatedBy: "}").filter({$0 != ""})
     }
-    func numSourcesPerColor(_ sortLowHi: Bool) -> String {
+    
+    func numSourcesPerColor(_ sortLowHi: Bool) -> [String] {
         var numSourcesColor: String = ""
         var line:String = ""
         var lines:[String] = [String]()
         //If no mana cost, return such
         if self.manaCost == "" {
-            return "This card has no mana cost"
+            lines.append("This card has no mana cost")
+            return lines
         }
         //CARD HAS NO COLORS IN CASTING COST
         //get number of lands needed to hit the drop
         if self.colorCost == [] {
-            /*let manaCostInt = Int(self.manaCost.dropFirst().dropLast())
-            let numSources = getNumSources(from: String(repeating: "C", count: manaCostInt!), numCardsInDeck: DeckController.shared.deck.numCardsMain)
-            if numSources == -1 {
-                return "This card has a high mana value or color requirement"
-            }
-            numSourcesColor += String(numSources)
-            numSourcesColor += " sources of any color"*/
-            return "This card has no colored mana cost"
+
+            lines.append("This card has no colored mana cost")
+            return lines
         //CARD HAS COLORS IN COST
         //get number of colored sources needed to cast on curve per Mr. Karsten
         } else {
@@ -68,7 +66,8 @@ struct Card: Hashable, Codable, Comparable, Equatable {
                 let numSources = getNumSources(from: cost, numCardsInDeck: DeckController.shared.deck.numCardsMain)
                 //if high cost, show message
                 if numSources == -1 {
-                    return "This card has a high mana value or color requirement"
+                    lines.append("This card has a high mana value or color requirement")
+                    return lines
                 }
                 line = String(numSources)
                 line += " " + mtgColor + " sources\n"
@@ -97,7 +96,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
             }
             numSourcesColor.removeLast()
         }
-        return numSourcesColor
+        return lines
     }
     
     enum CodingKeys: String, CodingKey {
@@ -109,6 +108,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         case cardFaces = "card_faces"
         case drop
         case numInDeck
+        case layout = "layout"
     }
     
     init(from decoder: Decoder) throws {
@@ -119,6 +119,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
         oracleText = try container.decodeIfPresent(String.self, forKey: .oracleText) ?? ""
         colorIdentity = try container.decodeIfPresent([String].self, forKey: .colorIdentity)
         cardFaces = try container.decodeIfPresent([Card].self, forKey: .cardFaces)
+        layout = try container.decodeIfPresent(String.self, forKey: .layout) ?? ""
         drop = try container.decodeIfPresent(Int.self, forKey: .drop) ?? 0
         numInDeck = try container.decodeIfPresent(Int.self, forKey: .numInDeck) ?? 0
     }
@@ -141,7 +142,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
     }
     
     //returns a dict where key is color as char (WUBRG) & value is num color pips as char "C" (CCC)
-    func colorClassDict() ->  [String:String] {
+    func colorClassDict() -> [String:String] {
         var pipCount = [String:Int]()
         var colorDict = [String:String]()
         var classString: String

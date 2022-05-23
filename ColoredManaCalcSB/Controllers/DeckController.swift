@@ -32,6 +32,8 @@ class DeckController {
     var hundredCardDeckList = [Deck]()
     var deck = Deck()
     let okChars = "abcdefghijklmnopqrstuvwxyz1234567890"
+    var sharedDeckSection:Int = -1
+    var sharedDeckRow:Int = -1
 
     //populates deck text dicts with lowercased card name and num in deck for main and side
     func buildDeckDicts(with textDeckList:String) throws {
@@ -77,12 +79,15 @@ class DeckController {
     
     //processes array of cards fetched from scryfall API to add to deck if the match names in main card array
     func process (_ cards: [Card]) {
-        var processedName :String
+        var processedName: String
         //add card faces as cards
         for card in cards {
             if let faces = card.cardFaces {
-                processedName = faces[0].name.lowercased().filter {okChars.contains($0)}
-                
+                if  card.layout != "split" {
+                    processedName = faces[0].name.lowercased().filter {okChars.contains($0)}
+                } else {
+                    processedName = card.name.lowercased().filter {okChars.contains($0)}
+                }
             } else {
                 processedName = card.name.lowercased().filter {okChars.contains($0)}
             }
@@ -135,11 +140,12 @@ class DeckController {
     func setDropAndColors () {
         for index in 0..<deck.mainCardArray.count {
             deck.mainCardArray[index].setDrop()
-            
+
             for color in deck.mainCardArray[index].colors {
                 if !deck.colors.contains(color) {deck.colors.append(color)}
             }
         }
+        deck.sortColors()
     }
     
     func setMostExpensiveCard () {
@@ -190,6 +196,8 @@ class DeckController {
         ]
             
         let url = baseURL.withQueries(query)!
+        
+        print(url.absoluteString)
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             let jsonDecoder = JSONDecoder()
