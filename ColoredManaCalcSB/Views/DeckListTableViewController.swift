@@ -8,8 +8,8 @@
 
 import UIKit
 
+@available(iOS 15.0, *)
 class DeckListTableViewController: UITableViewController {
-
     override func viewDidLoad() {
         super.viewDidLoad()
         // Uncomment the following line to preserve selection between presentations
@@ -55,9 +55,17 @@ class DeckListTableViewController: UITableViewController {
         
         switch indexPath.section {
         case 0:
+            //like all the shit in these cases should be in an update class or at least a method
             if DeckController.shared.sixtyCardDeckList.count > 0 {
                 cell.textLabel?.text = DeckController.shared.sixtyCardDeckList[indexPath.row].name
-                cell.detailTextLabel?.text = DeckController.shared.sixtyCardDeckList[indexPath.row].colors.joined()
+                let pipImages = NSMutableAttributedString()
+                for color in DeckController.shared.sixtyCardDeckList[indexPath.row].colors {
+                    let pipImage = UIImage(named: pipTextToImageName[color] ?? color)
+                    let pipAttachment = NSTextAttachment(image: pipImage!)
+                    pipAttachment.bounds = pipImageBounds
+                    pipImages.append(NSAttributedString(attachment: pipAttachment))
+                }
+                cell.detailTextLabel?.attributedText = pipImages
             } else {
                 cell.isUserInteractionEnabled = false
             }
@@ -65,7 +73,14 @@ class DeckListTableViewController: UITableViewController {
         case 1:
             if DeckController.shared.hundredCardDeckList.count > 0 {
                 cell.textLabel?.text = DeckController.shared.hundredCardDeckList[indexPath.row].name
-                cell.detailTextLabel?.text = DeckController.shared.hundredCardDeckList[indexPath.row].colors.joined()
+                let pipImages = NSMutableAttributedString()
+                for color in DeckController.shared.hundredCardDeckList[indexPath.row].colors {
+                    let pipImage = UIImage(named: pipTextToImageName[color] ?? color)
+                    let pipAttachment = NSTextAttachment(image: pipImage!)
+                    pipAttachment.bounds = pipImageBounds
+                    pipImages.append(NSAttributedString(attachment: pipAttachment))
+                }
+                cell.detailTextLabel?.attributedText = pipImages
             } else {
                 cell.isUserInteractionEnabled = false
             }
@@ -73,7 +88,14 @@ class DeckListTableViewController: UITableViewController {
         case 2:
             if DeckController.shared.fortyCardDeckList.count > 0 {
                 cell.textLabel?.text = DeckController.shared.fortyCardDeckList[indexPath.row].name
-                cell.detailTextLabel?.text = DeckController.shared.fortyCardDeckList[indexPath.row].colors.joined()
+                let pipImages = NSMutableAttributedString()
+                for color in DeckController.shared.fortyCardDeckList[indexPath.row].colors {
+                    let pipImage = UIImage(named: pipTextToImageName[color] ?? color)
+                    let pipAttachment = NSTextAttachment(image: pipImage!)
+                    pipAttachment.bounds = pipImageBounds
+                    pipImages.append(NSAttributedString(attachment: pipAttachment))
+                }
+                cell.detailTextLabel?.attributedText = pipImages
             } else {
                 cell.isUserInteractionEnabled = false
             }
@@ -87,7 +109,8 @@ class DeckListTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         //tap the cell, load the deck, go to Mana Description scene
-        
+        DeckController.shared.sharedDeckSection = indexPath.section
+        DeckController.shared.sharedDeckRow = indexPath.row
         switch indexPath.section {
         case 0:
             DeckController.shared.deck = DeckController.shared.sixtyCardDeckList[indexPath.row]
@@ -99,11 +122,11 @@ class DeckListTableViewController: UITableViewController {
             DeckController.shared.deck = Deck()
         }
 
-        if indexPath.section == 0 && DeckController.shared.sixtyCardDeckList.count > 0{
+        /*if indexPath.section == 0 && DeckController.shared.sixtyCardDeckList.count > 0 {
             DeckController.shared.deck = DeckController.shared.sixtyCardDeckList[indexPath.row]
         } else if DeckController.shared.fortyCardDeckList.count > 0 {
             DeckController.shared.deck = DeckController.shared.fortyCardDeckList[indexPath.row]
-        }
+        }*/
     }
     
     func updateUI () {
@@ -113,15 +136,33 @@ class DeckListTableViewController: UITableViewController {
     }
     
     @IBAction func unwindToDecks(unwindSegue: UIStoryboardSegue) {
+        let formatNum = DeckController.shared.sharedDeckSection
+        let rowNum = DeckController.shared.sharedDeckRow
         
-        if DeckController.shared.deck.numCardsMain <= 59 {
-            DeckController.shared.fortyCardDeckList.append(DeckController.shared.deck)
-        } else if DeckController.shared.deck.numCardsMain >= 60 && DeckController.shared.deck.numCardsMain < 100 {
-            DeckController.shared.sixtyCardDeckList.append(DeckController.shared.deck)
-        } else if DeckController.shared.deck.numCardsMain >= 100 {
-            DeckController.shared.hundredCardDeckList.append(DeckController.shared.deck)
+        if formatNum >= 0 && rowNum >= 0 {
+            switch formatNum {
+            case 0:
+                DeckController.shared.sixtyCardDeckList[rowNum] = DeckController.shared.deck
+            case 1:
+                DeckController.shared.hundredCardDeckList[rowNum] = DeckController.shared.deck
+            case 2:
+                DeckController.shared.fortyCardDeckList[rowNum] = DeckController.shared.deck
+            default:
+                print("ERROR, DECK SECTION OUT OF BOUNDS")
+            }
+            
+        } else {
+            if DeckController.shared.deck.numCardsMain <= 59 {
+                DeckController.shared.fortyCardDeckList.append(DeckController.shared.deck)
+            } else if DeckController.shared.deck.numCardsMain >= 60 && DeckController.shared.deck.numCardsMain < 100 {
+                DeckController.shared.sixtyCardDeckList.append(DeckController.shared.deck)
+            } else if DeckController.shared.deck.numCardsMain >= 100 {
+                DeckController.shared.hundredCardDeckList.append(DeckController.shared.deck)
+            }
         }
         
+        DeckController.shared.sharedDeckSection = -1
+        DeckController.shared.sharedDeckSection = -1
         DeckController.shared.saveDecks()
         self.updateUI()
     }
@@ -172,11 +213,5 @@ class DeckListTableViewController: UITableViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        
-        
-    }
 
 }

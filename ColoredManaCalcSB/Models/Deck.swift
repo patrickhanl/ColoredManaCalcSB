@@ -43,11 +43,17 @@ struct Deck: Codable {
             for color in producedColors {
                 for pair in colorSourcesDict.filter({$0.key.contains(color[color.index(after: color.startIndex)])}) {
                     colorSourcesDict[pair.key]! += card.numInDeck
-                    }
                 }
             }
-        return colorSourcesDict
         }
+        return colorSourcesDict
+    }
+    
+    mutating func sortColors() {
+        colors.sort {lhs, rhs in
+            return orderedColorsDict[lhs]! < orderedColorsDict[rhs]!
+        }
+    }
 
     init(name: String = "", mainCardArray: [Card] = [], sideCardArray: [Card] = [], mainText: [String:Int] = [:], sideText: [String:Int] = [:], numCardsMain: Int = 0, numCardsSide: Int = 0, colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
         
