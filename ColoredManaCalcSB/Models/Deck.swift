@@ -13,8 +13,8 @@ struct Deck: Codable {
     var name: String
     var mainCardArray: [Card]
     var sideCardArray: [Card]
-    var mainTextCountDict: [String:Int]
-    var sideTextCountDict: [String:Int]
+    var mainTextCountDict: [String:Int] = [:]
+    var sideTextCountDict: [String:Int] = [:]
     var numCardsMain: Int
     var numCardsSide: Int
     var colors: [String]
@@ -26,6 +26,7 @@ struct Deck: Codable {
         }
         return count
     }
+    
     var numLandsForColor: [String:Int] {
         //store colors and number of soures, colors read from card "colors" attribute
         var colorSourcesDict = [String:Int]()
@@ -54,19 +55,61 @@ struct Deck: Codable {
             return orderedColorsDict[lhs]! < orderedColorsDict[rhs]!
         }
     }
+    
+    func exportDecklist() -> String {
+        //let okChars = "abcdefghijklmnopqrstuvwxyz1234567890"
+        var returnString = "Deck\n"
+        var mainCount:Int = 0
+        var sideCount:Int = 0
+        
+        /*for card in mainCardArray {
+            if let count = mainTextCountDict[card.name.lowercased().replacingOccurrences(of: " ", with: "").filter {okChars.contains($0)}] {
+                mainCount += count
+                returnString.append(String(count) + " " + card.name + "\n")
+            }
+            else {
+                //print(card.name + " not found!")
+            }
+        }
+        returnString.append("\nSideboard\n")
+        
+        for card in sideCardArray {
+            if let count = sideTextCountDict[card.name.lowercased().replacingOccurrences(of: " ", with: "").filter {okChars.contains($0)}] {
+                returnString.append(String(count) + " " + card.name + "\n")
+                sideCount += count
+            }
+            else {
+                //print(card.name + " not found!")
+            }
+        }
+        
+         */
+        for (name, number) in mainTextCountDict {
+            returnString.append("\(number) \(name)\n")
+            mainCount += number
+        }
+        returnString.append("\nSideboard\n")
+        for (name, number) in sideTextCountDict {
+            returnString.append("\(number) \(name)\n")
+            sideCount += number
+        }
+        
+        returnString.removeLast()
+        print("Main Count = " + String(mainCount))
+        print("Side Count = " + String(sideCount))
+        
+        return returnString
+    }
 
-    init(name: String = "", mainCardArray: [Card] = [], sideCardArray: [Card] = [], mainText: [String:Int] = [:], sideText: [String:Int] = [:], numCardsMain: Int = 0, numCardsSide: Int = 0, colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
+    init(name: String = "", mainCardArray: [Card] = [], sideCardArray: [Card] = [], numCardsMain: Int = 0, numCardsSide: Int = 0, colors: [String] = [], mostExpensiveCardForColor: [String:Card] = [:]) {
         
         self.name = "New Deck"
         self.mainCardArray = mainCardArray
         self.sideCardArray = sideCardArray
-        self.mainTextCountDict = mainText
-        self.sideTextCountDict = sideText
         self.numCardsMain = numCardsMain
         self.numCardsSide = numCardsSide
         self.colors = []
         self.mostExpensiveCardForColor = mostExpensiveCardForColor
-        
     }
     
 }

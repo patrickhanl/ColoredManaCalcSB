@@ -36,6 +36,7 @@ class MostExpensiveCardColorCell: UITableViewCell {
         
         let mod_str = card.manaCost.replacingOccurrences(of: "{", with: "")
         let pips = mod_str.components(separatedBy: "}").filter({$0 != ""})
+        
         for pip in pips {
             let pipImage = NSTextAttachment()
             pipImage.image = UIImage(named: pipTextToImageName[pip] != nil ? pipTextToImageName[pip]! : pip)
@@ -43,17 +44,23 @@ class MostExpensiveCardColorCell: UITableViewCell {
             pipImage.bounds = pipImageBounds
             cardLabelText.append(NSAttributedString(attachment: pipImage))
         }
+        
         cardLabelText.append(NSAttributedString(string: ")"))
         cardLabel.attributedText = cardLabelText
         
-        let costLabelText = NSMutableAttributedString(string: "To cast it on turn \(card.drop), you need \(getNumSources(from: card.colorClassDict()[color]!, numCardsInDeck: DeckController.shared.deck.numCardsMain)) ")
+        let numSources = getNumSources(from: card.colorClassDict()[color]!, format: DeckController.shared.sharedDeckSection)
         
-        costLabelText.append(NSAttributedString(attachment: colorImage))
-        costLabelText.append(NSAttributedString(string: " sources. You have \(num) "))
-        costLabelText.append(NSAttributedString(attachment: colorImage))
-        costLabelText.append(NSAttributedString(string: " sources."))
+        if numSources >= 0 {
+            let costLabelText = NSMutableAttributedString(string: "To cast it on turn \(card.drop), you need \(numSources) ")
         
-        costLabel.attributedText = costLabelText
+            costLabelText.append(NSAttributedString(attachment: colorImage))
+            costLabelText.append(NSAttributedString(string: " sources. You have \(num) "))
+            costLabelText.append(NSAttributedString(attachment: colorImage))
+            costLabelText.append(NSAttributedString(string: " sources."))
+            
+            costLabel.attributedText = costLabelText
+        } else {
+            costLabel.text = "Due to the colored mana requirement, you will probably not be able to cast this card on curve."
+        }
     }
-
 }

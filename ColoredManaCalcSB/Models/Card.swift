@@ -63,7 +63,7 @@ struct Card: Hashable, Codable, Comparable, Equatable {
                 guard let cost = self.colorClassDict()[mtgColor] else {
                     continue
                 }
-                let numSources = getNumSources(from: cost, numCardsInDeck: DeckController.shared.deck.numCardsMain)
+                let numSources = getNumSources(from: cost, format: DeckController.shared.sharedDeckSection)
                 //if high cost, show message
                 if numSources == -1 {
                     lines.append("This card has a high mana value or color requirement")
