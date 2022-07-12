@@ -122,11 +122,6 @@ class DeckListTableViewController: UITableViewController {
             DeckController.shared.deck = Deck()
         }
 
-        /*if indexPath.section == 0 && DeckController.shared.sixtyCardDeckList.count > 0 {
-            DeckController.shared.deck = DeckController.shared.sixtyCardDeckList[indexPath.row]
-        } else if DeckController.shared.fortyCardDeckList.count > 0 {
-            DeckController.shared.deck = DeckController.shared.fortyCardDeckList[indexPath.row]
-        }*/
     }
     
     func updateUI () {
@@ -152,12 +147,15 @@ class DeckListTableViewController: UITableViewController {
             }
             
         } else {
-            if DeckController.shared.deck.numCardsMain <= 59 {
-                DeckController.shared.fortyCardDeckList.append(DeckController.shared.deck)
-            } else if DeckController.shared.deck.numCardsMain >= 60 && DeckController.shared.deck.numCardsMain < 100 {
+            switch formatNum {
+            case 0:
                 DeckController.shared.sixtyCardDeckList.append(DeckController.shared.deck)
-            } else if DeckController.shared.deck.numCardsMain >= 100 {
+            case 1:
                 DeckController.shared.hundredCardDeckList.append(DeckController.shared.deck)
+            case 2:
+                DeckController.shared.fortyCardDeckList.append(DeckController.shared.deck)
+            default:
+                print("ERROR, DECK SECTION OUT OF BOUNDS")
             }
         }
         
@@ -193,6 +191,28 @@ class DeckListTableViewController: UITableViewController {
         /*} else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }*/
+    }
+    
+    @IBAction func addButtonTapped(_ sender: UIBarButtonItem) {
+        var actions = [UIAlertAction]()
+        for formatIndex in 0..<DeckController.shared.sectionTitles.count {
+            let newAction = UIAlertAction(title: DeckController.shared.sectionTitles[formatIndex], style: .default/*, handler: showEntrySegue*/) { (action) in
+                self.performSegue(withIdentifier: "deckEntrySegue", sender: nil)
+                DeckController.shared.sharedDeckSection = formatIndex                
+            }
+            actions.append(newAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        actions.append(cancelAction)
+        
+        let formatChoiceAlert = UIAlertController(title: "Choose Deck Format", message: "The format is used to calculate the number of lands needed to draw sufficient colored sources to cast a card on the earliest turn possible based on the minimum number of cards in the deck.", preferredStyle: .actionSheet)
+        
+        for action in actions {
+            formatChoiceAlert.addAction(action)
+        }
+        
+            self.present(formatChoiceAlert, animated: true)
     }
 
     /*

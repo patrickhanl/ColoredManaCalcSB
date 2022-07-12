@@ -33,6 +33,7 @@ class DeckEntryViewController: UIViewController {
         DeckController.shared.deck = Deck()
     }
     
+    let fetchingAlert = UIAlertController(title: "Downloading card data...", message: "Card data should be downloaded by the time you finish reading this message!", preferredStyle: .alert)
     @IBOutlet weak var deckEntryTextView: UITextView!
 
     @IBOutlet weak var deckNameTextField: UITextField!
@@ -40,29 +41,54 @@ class DeckEntryViewController: UIViewController {
     @IBAction func nextButton(_ sender: UIButton) {
         
         let noDeckAlert = UIAlertController(title: "No Deck Entered", message: "Please enter a deck", preferredStyle: .alert)
-        noDeckAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        noDeckAlert.addAction(UIAlertAction(title: "OK", style: .cancel))
         
         let noDeckNameAlert = UIAlertController(title: "No Deck Name Entered", message: "Please enter a deck name", preferredStyle: .alert)
-        noDeckNameAlert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+        noDeckNameAlert.addAction(UIAlertAction(title: "OK", style: .cancel))
         
-        if deckEntryTextView.text == "" {present(noDeckAlert, animated: true, completion: nil) }
-        
-        do {
-            try DeckController.shared.buildDeckDicts(with: deckEntryTextView.text)
-            
-        } catch {
-            present(noDeckAlert, animated: true, completion: nil)
+        textLabel: if !deckEntryTextView.hasText {
+            present(noDeckAlert, animated: true)
+            return
+        } else {
+            do {
+                //I don't hink buildDeckDicts needs to throw unless I want to catch more errors???
+                try DeckController.shared.buildDeckDicts(with: deckEntryTextView.text)
+            } catch DeckController.cardProcessError.noNumber {
+                let noNumberAlert = UIAlertController(title: "Can't find # of cards", message: "Enter cards with number in front like: \n4 Counterspell", preferredStyle: .alert)
+                noNumberAlert.addAction(UIAlertAction(title: "OK", style: .cancel))
+                present(noNumberAlert, animated: true)
+                return
+            } catch {
+                print("Generic Error")
+                present(noDeckAlert, animated: true, completion: nil)
+            }
         }
         
         if deckNameTextField.hasText {
             DeckController.shared.deck.name = deckNameTextField.text!
-        } else { present(noDeckNameAlert, animated: true, completion: nil) }
+        } else {
+            present(noDeckNameAlert, animated: true, completion: nil)
+            return
+        }
+        
+        self.present(self.fetchingAlert, animated: true)
+        DeckController.shared.fetchCards(completion: { (cards) in
+            self.dismiss(animated: true, completion: {
+                self.segueToDrops(cards: cards)
+            })
+        })
     }
     
     @IBAction func copyButtonTapped(_ sender: UIBarButtonItem) {
-        if UIPasteboard.general.hasStrings {
-            deckEntryTextView.text = UIPasteboard.general.string
+        let noTextAlert = UIAlertController(title: "No text in clipboard", message: "Go get a deck!", preferredStyle: .alert)
+        noTextAlert.addAction(UIAlertAction(title: "OK", style: .cancel))
+        
+        guard let deckText = UIPasteboard.general.string else {
+            present(noTextAlert, animated: true)
+            return
         }
+        deckEntryTextView.text = deckText
+        //if UIPasteboard.general.hasStrings {
     }
     
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
@@ -84,17 +110,36 @@ class DeckEntryViewController: UIViewController {
         deckNameTextField.endEditing(true)
     }
     
+    func segueToDrops (cards:[Card]) {
+        do {
+            try DeckController.shared.process(cards)
+            DeckController.shared.setDropAndColors()
+        } catch DeckController.cardGetError.couldNotFindCardError(let cardsNotFound) {
+            var cardNames = String()
+            for card in cardsNotFound {
+                cardNames.append(card + "\n")
+            }
+            let cardNotFoundError = UIAlertController(title: "Could not find cards", message: "Could not find these cards on Scryfall: \n" + cardNames, preferredStyle: .alert)
+            cardNotFoundError.addAction(UIAlertAction(title: "OK", style: .cancel))
+            self.present(cardNotFoundError, animated: true)
+            return
+        } catch {
+            //generic error?
+        }
+        performSegue(withIdentifier: "setDropSegue", sender: nil)
+    }
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         
         if let setDropDestination = segue.destination as? SetDropTableViewController {
-            print("fetching...")
-            DeckController.shared.fetchCards(completion: setDropDestination.updateUI)
+            
+            setDropDestination.updateUI()
         }
-    }
+    }*/
 
 }

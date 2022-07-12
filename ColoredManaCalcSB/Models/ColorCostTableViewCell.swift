@@ -29,13 +29,16 @@ class ColorCostTableViewCell: UITableViewCell {
     
     func update(with color: String) {
         bigPipImage.image = (UIImage(named: pipTextToImageName[color] ?? color))
-        /*let colorImage = (UIImage(named: pipTextToImageName[color] ?? color))
-        let imageAttachment = NSTextAttachment(image: colorImage!)
-        imageAttachment.bounds = pipImageBounds
-        colorLabel.attributedText = NSAttributedString(attachment: imageAttachment)*/
         
         hasSourcesLabel.text = "Deck has sources: " + String(DeckController.shared.deck.numLandsForColor[color]!)
-        needsSourcesLabel.text = "Deck needs sources " + String(getNumSources(from: DeckController.shared.deck.mostExpensiveCardForColor[color]!.colorClassDict()[color]!, numCardsInDeck: DeckController.shared.deck.numCardsMain))
+        
+        let sources = getNumSources(from: DeckController.shared.deck.mostExpensiveCardForColor[color]!.colorClassDict()[color]!, format: DeckController.shared.sharedDeckSection)
+        
+        if sources >= 0 {
+            needsSourcesLabel.text = "Deck needs sources " + String(sources)
+        } else {
+            needsSourcesLabel.text = "Deck needs too many sources to reliably cast on curve"
+        }
     }
     
 }

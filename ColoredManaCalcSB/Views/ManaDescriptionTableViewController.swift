@@ -15,6 +15,7 @@ class ManaDescriptionTableViewController: UITableViewController {
         super.viewWillAppear(true)
         DeckController.shared.setMostExpensiveCard()
         self.updateData()
+        buildMenu()
     }
 
     override func viewDidLoad() {
@@ -43,6 +44,31 @@ class ManaDescriptionTableViewController: UITableViewController {
     var spellArray: [Card] = []
     var spellArrayAZ = true
     var spellArrayLowHi = false
+    
+    @IBOutlet weak var moreButton: UIBarButtonItem!
+    
+    func buildMenu() {
+        let saveAction = UIAction(title: "Save", image: UIImage(systemName: "square.and.arrow.down")) { (_) in
+            self.performSegue(withIdentifier: "unwindToDecksWithUnwindSegue", sender: self)
+        }
+        let editAction = UIAction(title: "Edit Card Drops", image: UIImage(systemName: "pencil.circle")) { (_) in
+            self.performSegue(withIdentifier: "editDropSegue", sender: self)
+        }
+        let copyAction = UIAction(title: "Copy to Clipboard", image: UIImage(systemName: "doc.on.doc")) { (_) in
+            let decklist = DeckController.shared.deck.exportDecklist()
+            UIPasteboard.general.string = decklist
+            let copyAlert = UIAlertController(title: "Copied", message: "Deck Copied to Keyboard", preferredStyle: .alert)
+            self.present(copyAlert, animated: true)
+            let dismissTime = DispatchTime.now() + 1
+            DispatchQueue.main.asyncAfter(deadline: dismissTime, execute: {
+                copyAlert.dismiss(animated: true)
+            })
+        }
+        let children = [saveAction, editAction, copyAction]
+        let menu = UIMenu(title: "", children: children)
+        moreButton.menu = menu
+        
+    }
     
     struct headerData {
         var leftLabelText: String?
@@ -121,18 +147,13 @@ class ManaDescriptionTableViewController: UITableViewController {
         case 0:
             //MostExpensive Card Color and cell
             let color = colorArray[indexPath.row]
-            
             let mostExpensiveCardDict = DeckController.shared.deck.mostExpensiveCardForColor
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "costCell", for: indexPath) as! MostExpensiveCardColorCell
-            
             cell.update(with: color, card: mostExpensiveCardDict[color]!, num: String(DeckController.shared.deck.numLandsForColor[color]!))
-            
             return cell
         
         case 1:
             let cell = tableView.dequeueReusableCell(withIdentifier: "colorCostCell", for: indexPath) as! ColorCostTableViewCell
-            
             let color = colorArray[indexPath.row]
             cell.update(with: color)
 
@@ -140,11 +161,8 @@ class ManaDescriptionTableViewController: UITableViewController {
         
         case 2:
             let card = spellArray[indexPath.row]
-            
             let cell = tableView.dequeueReusableCell(withIdentifier: "cardCostCell", for: indexPath) as! CardCostTableViewCell
-            
             cell.update(with: card, spellArrayLowHi)
-            
             return cell
             
         default: return UITableViewCell()
@@ -162,17 +180,17 @@ class ManaDescriptionTableViewController: UITableViewController {
     
     @objc func CDButtonSort() {
         if (spellArrayAZ) {
-            spellArray.sort(by: >)
+            spellArray.sort(by: <)
             spellArrayAZ = false
         } else {
-            spellArray.sort(by: <)
+            spellArray.sort(by: >)
             spellArrayAZ = true
         }
         tableView.reloadData()
     }
     
     @objc func sourcesToCastButtonSort () {
-        if (spellArrayLowHi) {
+        if (!spellArrayLowHi) {
             spellArray.sort { lhs, rhs in
                 let lhsSeparated = lhs.numSourcesPerColor(spellArrayLowHi)[0].split(separator: " ")
                 let rhsSeparated = rhs.numSourcesPerColor(spellArrayLowHi)[0].split(separator: " ")
@@ -189,7 +207,7 @@ class ManaDescriptionTableViewController: UITableViewController {
                 return lhsInt > rhsInt
             }
             //header2.rightButtonText = "Sources to Cast on Curve ^"
-            spellArrayLowHi = false
+            spellArrayLowHi = true
         } else {
             spellArray.sort { lhs, rhs in
                 let lhsSeparated = lhs.numSourcesPerColor(spellArrayLowHi)[0].split(separator: " ")
@@ -207,7 +225,7 @@ class ManaDescriptionTableViewController: UITableViewController {
                 return lhsInt < rhsInt
             }
             //header2.rightButtonText = "Sources to Cast on Curve v"
-            spellArrayLowHi = true
+            spellArrayLowHi = false
         }
         tableView.reloadData()
     }
@@ -252,11 +270,13 @@ class ManaDescriptionTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        }
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }

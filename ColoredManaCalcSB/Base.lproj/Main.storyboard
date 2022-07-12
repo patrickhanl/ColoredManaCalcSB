@@ -61,7 +61,6 @@
                                         <state key="normal" title="Next"/>
                                         <connections>
                                             <action selector="nextButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tte-wn-jTL"/>
-                                            <segue destination="b08-Nb-xgb" kind="show" identifier="setDropSegue" id="qpS-h2-tr5"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -87,6 +86,7 @@
                         <outlet property="bottomConstraint" destination="dsV-j5-aV6" id="8fg-Ae-sa1"/>
                         <outlet property="deckEntryTextView" destination="nNz-95-jbY" id="zGg-EN-KIl"/>
                         <outlet property="deckNameTextField" destination="QuU-2z-iBM" id="pyH-3a-OXv"/>
+                        <segue destination="b08-Nb-xgb" kind="show" identifier="setDropSegue" id="kqo-PW-cya"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -159,14 +159,17 @@
                     <navigationItem key="navigationItem" title="Decks" id="Atz-H3-A88">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="e2F-5R-r5N">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="show" id="lvO-ya-6rr"/>
+                                <action selector="addButtonTapped:" destination="aGP-DC-ZhH" id="9rm-Lk-hag"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="deckEntrySegue" id="TE3-Xe-dKO"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iXd-GL-LrR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-284.05797101449275" y="191.51785714285714"/>
+            <point key="canvasLocation" x="-287" y="159"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DPY-xx-UbU">
@@ -182,7 +185,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fFK-3p-Hzh" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1020" y="192"/>
+            <point key="canvasLocation" x="-1049" y="159"/>
         </scene>
         <!--Set Drop-->
         <scene sceneID="KUd-Ff-Pt3">
@@ -268,7 +271,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="14Z-S6-Hbo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1712" y="-108"/>
+            <point key="canvasLocation" x="1249" y="159"/>
         </scene>
         <!--Mana Description Table View Controller-->
         <scene sceneID="On4-ni-ya8">
@@ -319,28 +322,38 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfj-o7-aPo">
-                                            <rect key="frame" x="352" y="15" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAd-Lx-B6C">
-                                            <rect key="frame" x="352" y="44" width="42" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lNh-hc-Njb">
-                                            <rect key="frame" x="20" y="11" width="58" height="58"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <stackView opaque="NO" contentMode="right" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="ddg-sC-aUe">
+                                            <rect key="frame" x="100" y="10" width="304" height="60"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hfj-o7-aPo">
+                                                    <rect key="frame" x="262.5" y="0.0" width="41.5" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="right" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mAd-Lx-B6C">
+                                                    <rect key="frame" x="262.5" y="20.5" width="41.5" height="39.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="251" horizontalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="lNh-hc-Njb">
+                                            <rect key="frame" x="30" y="10" width="60" height="60"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="60" id="UCL-qo-SVv"/>
+                                            </constraints>
                                         </imageView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="Hfj-o7-aPo" secondAttribute="trailing" constant="20" id="9hX-hB-1mL"/>
-                                        <constraint firstAttribute="trailing" secondItem="mAd-Lx-B6C" secondAttribute="trailing" constant="20" id="edB-sN-Yig"/>
-                                        <constraint firstItem="Hfj-o7-aPo" firstAttribute="top" secondItem="LI3-aO-LQX" secondAttribute="top" constant="15" id="mAW-eC-7gP"/>
-                                        <constraint firstAttribute="bottom" secondItem="mAd-Lx-B6C" secondAttribute="bottom" constant="15" id="nzi-gR-Svk"/>
+                                        <constraint firstAttribute="trailing" secondItem="ddg-sC-aUe" secondAttribute="trailing" constant="10" id="HlP-3a-WdB"/>
+                                        <constraint firstItem="lNh-hc-Njb" firstAttribute="top" secondItem="LI3-aO-LQX" secondAttribute="top" constant="10" id="NDx-rD-jJO"/>
+                                        <constraint firstItem="ddg-sC-aUe" firstAttribute="leading" secondItem="lNh-hc-Njb" secondAttribute="trailing" constant="10" id="VIL-Vb-Gpi"/>
+                                        <constraint firstItem="lNh-hc-Njb" firstAttribute="leading" secondItem="LI3-aO-LQX" secondAttribute="leadingMargin" constant="10" id="Yea-VK-60U"/>
+                                        <constraint firstAttribute="bottom" secondItem="ddg-sC-aUe" secondAttribute="bottom" constant="10" id="drG-rS-yHz"/>
+                                        <constraint firstAttribute="bottom" secondItem="lNh-hc-Njb" secondAttribute="bottom" constant="10" id="fXl-fE-UTD"/>
+                                        <constraint firstItem="ddg-sC-aUe" firstAttribute="top" secondItem="LI3-aO-LQX" secondAttribute="top" constant="10" id="p1a-XY-ixf"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
@@ -384,32 +397,28 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="26p-5n-7bF">
-                        <rightBarButtonItems>
-                            <barButtonItem title="Save" id="0rS-NQ-tsi">
-                                <connections>
-                                    <action selector="saveButtonTapped:" destination="hZt-mq-Kcp" id="m7A-lv-SLT"/>
-                                    <segue destination="HhA-Rq-Ngu" kind="unwind" unwindAction="unwindToDecksWithUnwindSegue:" id="xUW-NE-Y87"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem title="Edit" id="KgV-m0-wY4">
-                                <connections>
-                                    <segue destination="b08-Nb-xgb" kind="show" id="0bI-5A-h8n"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <nil key="title"/>
+                        <barButtonItem key="backBarButtonItem" title="Back" id="wTY-zY-Csj"/>
+                        <barButtonItem key="rightBarButtonItem" image="ellipsis.circle" catalog="system" id="Erk-fZ-oJ8"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="moreButton" destination="Erk-fZ-oJ8" id="IKi-GS-JVY"/>
+                        <segue destination="HhA-Rq-Ngu" kind="unwind" identifier="unwindToDecksWithUnwindSegue" unwindAction="unwindToDecksWithUnwindSegue:" id="6hx-Bh-t6s"/>
+                        <segue destination="b08-Nb-xgb" kind="show" identifier="editDropSegue" id="vzb-8H-BIg"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JaR-gl-JsB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="HhA-Rq-Ngu" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1182.608695652174" y="648.88392857142856"/>
+            <point key="canvasLocation" x="480" y="635"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="kne-fZ-bzZ"/>
-        <segue reference="0bI-5A-h8n"/>
+        <segue reference="kqo-PW-cya"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
